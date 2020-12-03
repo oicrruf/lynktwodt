@@ -7,7 +7,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-const Login = () => {
+const Login = ({navigation}) => {
   return (
     <>
       <View style={styles.containter}>
