@@ -2,16 +2,22 @@ import React from 'react';
 import {Button, Input} from 'react-native-elements';
 import {StyleSheet, View, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const App = () => {
   return (
     <>
       <View style={styles.containter}>
         <View style={styles.header}>
-          <Image
-            style={styles.tinyLogo}
-            source={require('./src/assets/images/logo.png')}
-          />
+          <View style={styles.logoContainer}>
+            <Image
+              style={styles.logo}
+              source={require('./src/assets/images/logo.png')}
+            />
+          </View>
         </View>
         <View style={styles.inputs}>
           <Input
@@ -23,8 +29,8 @@ const App = () => {
             leftIcon={<Icon name="lock" size={24} color="#F7D64B" />}
           />
         </View>
-        <View style={styles.button}>
-          <Button title="Ingresar" />
+        <View style={styles.buttonContainer}>
+          <Button buttonStyle={styles.button} title="Ingresar" />
         </View>
       </View>
     </>
@@ -33,30 +39,45 @@ const App = () => {
 
 const styles = StyleSheet.create({
   containter: {
-    flex: 1,
+    height: hp(100),
     justifyContent: 'center',
     alignItems: 'center',
   },
   header: {
-    flex: 1,
-    width: '100%',
+    height: hp(100) / 3,
+    width: wp(100),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#1F57E5',
+  },
+  logoContainer: {
+    backgroundColor: '#FFF',
+    width: wp(100),
+    height: hp(100) / 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomEndRadius: wp(20),
+    borderBottomStartRadius: wp(20),
+  },
+  logo: {
+    backgroundColor: '#FFF',
   },
   inputs: {
-    flex: 1,
-    width: '100%',
+    height: hp(100) / 3,
+    width: wp(100),
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#1F57E5',
+  },
+  buttonContainer: {
+    height: hp(100) / 3,
+    width: wp(100),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#1F57E5',
   },
   button: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#1F57E5',
+    width: wp(90),
   },
 });
 
