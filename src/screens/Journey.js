@@ -39,7 +39,7 @@ const Journey = ({navigation}) => {
             buttonStyle={styles.button}
             title="Iniciar viaje"
             onPress={() => {
-              navigation.navigate('Journey');
+              navigation.navigate('Delivery');
             }}
           />
         </View>
