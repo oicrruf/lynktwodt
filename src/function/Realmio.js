@@ -21,23 +21,28 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageT
 
   
   /// save access_token
-export function access_token(token,user,CheckStatus) {
-    if((token) && (user)){
+export function access_token(data,CheckStatus = false) {
+    if(data){
 
       let time_expires = CheckStatus 
       ? moment().add(365, 'day').format('LLL') 
       : moment().add(1, 'hours').format('LLL');
 
       Users = new Realm({ path: 'UsersDatabase.realm' });
-        
+      
         try {
+          /// variables para guardar.
+            
+          const idCompany = (data.companyInfo.id) ? data.companyInfo.id : false;
+          const access_token = (data.data[0].access_token) ? data.data[0].access_token : false;
+          const first_name = (data.companyInfo.first_name) ? data.companyInfo.first_name : false;
+          const last_name = (data.companyInfo.last_name) ? data.companyInfo.last_name : false;
+
             Users.write(() => {
                
                 let DataUsers = Users.objects('Users');
                 Users.delete(DataUsers);
-                let UserData = Users.create('Users', {id: 1, token: token, user: user, expires_at:time_expires});
-
-                console.log(UserData);
+                let UserData = Users.create('Users', {id: idCompany, token: access_token, user: first_name + last_name, expires_at:time_expires});
             
             });
         } catch (error) {
@@ -86,8 +91,7 @@ export function cleanLogin() {
 
 export function checkSession(navigation){
   
-  
-/*
+
   Users = new Realm({ path: 'UsersDatabase.realm' });
   try {
     Users.write(() => {
@@ -97,11 +101,14 @@ export function checkSession(navigation){
       let DataUsers = Users.objects('Users');
      
         if(DataUsers.length > 0){
-          
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'Journey'}],
+          });
         }else{
           navigation.reset({
             index: 0,
-            routes: [{name: 'login'}],
+            routes: [{name: 'Login'}],
           });
         }
     
@@ -110,5 +117,5 @@ export function checkSession(navigation){
   
   }catch (error) {
     console.log(error);
-  }*/
+  }
 }

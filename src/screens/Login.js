@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {Button, Input} from 'react-native-elements';
 import {StyleSheet, View, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -7,7 +7,41 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+import {axiosRequest} from "../function/Request";
+import {access_token,checkSession} from "../function/Realmio";
+
 const Login = ({navigation}) => {
+
+  const [GetUser, setformUser] = useState(false);
+  const [GetPass, setformPass] = useState(false);
+
+  useEffect(() => {
+    checkSession(navigation);
+  });
+
+  const getValue = (value, type = false) => {
+    (type) ? setformUser(value) :  setformPass(value);
+  }
+
+  const LoginCheck = () =>{
+
+    // Formateo la informacion.
+    const datalogin = { "email":GetUser,"password":GetPass};
+
+    // hago login y obtengo el token
+    axiosRequest('login','post',datalogin).then((resultAxios) => {  
+      // verifico la info
+     
+      if(resultAxios.data){
+         access_token(resultAxios.data);
+        // navigation.push("Journey");
+      }
+ 
+    }).catch(function (error) {
+      console.log(error);
+    }); 
+  } 
+
   return (
     <>
       <View style={styles.containter}>
@@ -23,10 +57,12 @@ const Login = ({navigation}) => {
           <Input
             placeholder="Usuario"
             leftIcon={<Icon name="user" size={24} color="#F7D64B" />}
+            onChangeText={event => getValue(event,"user")}
           />
           <Input
             placeholder="Contraseña"
             leftIcon={<Icon name="lock" size={24} color="#F7D64B" />}
+            onChangeText={event => getValue(event)}
           />
         </View>
         <View style={styles.buttonContainer}>
@@ -34,7 +70,7 @@ const Login = ({navigation}) => {
             buttonStyle={styles.button}
             title="Ingresar"
             onPress={() => {
-              navigation.navigate('Journey');
+              LoginCheck();
             }}
           />
         </View>
