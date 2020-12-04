@@ -19,7 +19,7 @@ const Journey = ({navigation}) => {
   // info AXIOS
   const DataSave = readData();
 
-  const CompanyInfo = {id:DataSave.id, access_token:data.access_token};
+  const CompanyInfo = {id:DataSave.id, access_token:DataSave.access_token};
   console.log(CompanyInfo);
         
   /// Get info placas y name users
