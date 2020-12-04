@@ -10,26 +10,26 @@ import {axiosRequest} from '../function/Request';
 import {checkSession, readData} from '../function/Realmio';
 
 const Journey = ({navigation}) => {
+
   /// Verifico la session del usuario
   useEffect(() => {
     checkSession(navigation);
-  });
+  },[]);
+
   // info AXIOS
   const DataSave = readData()[0];
-
   const CompanyInfo = {id:DataSave.id, access_token:DataSave.token};
-  
   const [plate, setPlate] = useState({});
   
-  axiosRequest('info','get',CompanyInfo).then((resultInfoCompany) => {  
+  useEffect(() => {
+    axiosRequest('info','get',CompanyInfo).then((resultInfoCompany) => {  
       let placas = resultInfoCompany.data
-      setPlate(placas);
-      
+
     }).catch(function (error) {
       console.log(error);
     }); 
-    
-    console.log(plate);
+  }, []);
+  
     
   return (
     <>
