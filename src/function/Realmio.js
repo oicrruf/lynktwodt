@@ -42,7 +42,7 @@ export function access_token(data,CheckStatus = false) {
                
                 let DataUsers = Users.objects('Users');
                 Users.delete(DataUsers);
-                let UserData = Users.create('Users', {id: idCompany, token: access_token, user: first_name + last_name, expires_at:time_expires});
+                let UserData = Users.create('Users', {id: idCompany, token: access_token, user: first_name + " " + last_name, expires_at:time_expires});
             
             });
         } catch (error) {
@@ -53,24 +53,26 @@ export function access_token(data,CheckStatus = false) {
 }
 
 
-export function reloadLogin() {
+export function readData() {
 
+ 
   Users = new Realm({ path: 'UsersDatabase.realm' });
-  let data = '';
+  let data = "";
   try {
     Users.write(() => {
-      // Create a book object
       let DataUsers = Users.objects('Users');
-      
-       data =  DataUsers;
-  
+      data = DataUsers;
+
   });
+  
+  }catch (error) {
+    console.log(error);
+  }
 
   return data;
-  } catch (error) {
-    console.log('Error en realmio.js');
-  }
 }
+
+
 
 
 export function cleanLogin() {
@@ -89,15 +91,13 @@ export function cleanLogin() {
   }
 }
 
-export function checkSession(navigation){
+export function reLogin(navigation){
   
 
   Users = new Realm({ path: 'UsersDatabase.realm' });
   try {
     Users.write(() => {
 
-     
-      // Create a book object
       let DataUsers = Users.objects('Users');
      
         if(DataUsers.length > 0){
@@ -105,6 +105,28 @@ export function checkSession(navigation){
             index: 0,
             routes: [{name: 'Journey'}],
           });
+        }else{
+          
+        }
+     
+  });
+  
+  }catch (error) {
+    console.log(error);
+  }
+}
+
+export function checkSession(navigation){
+  
+
+  Users = new Realm({ path: 'UsersDatabase.realm' });
+  try {
+    Users.write(() => {
+
+      let DataUsers = Users.objects('Users');
+     
+        if(DataUsers.length > 0){
+          
         }else{
           navigation.reset({
             index: 0,

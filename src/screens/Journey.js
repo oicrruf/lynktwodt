@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {Button, Input} from 'react-native-elements';
 import {StyleSheet, View, Image, Text} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
@@ -6,11 +6,41 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {axiosRequest} from "../function/Request";
+import {checkSession,readData} from "../function/Realmio";
+
 
 const Journey = ({navigation}) => {
+
+  /// Verifico la session del usuario 
+  useEffect(() => {
+    checkSession(navigation);
+  });
+  // info AXIOS
+  const DataSave = readData();
+
+  const CompanyInfo = {id:DataSave.id, access_token:data.access_token};
+  console.log(CompanyInfo);
+        
+  /// Get info placas y name users
+  axiosRequest('info','get',CompanyInfo).then((resultInfoCompany) => {  
+  
+    if(resultInfoCompany.data){
+      const dataPlacas = resultInfoCompany.data[0];
+        navigation.push("Journey");
+    }
+
+  }).catch(function (error) {
+    console.log(error);
+  }); 
+
+
+
   const [plate, setPlate] = useState({
     plate: 'P469113',
   });
+
+  
   return (
     <>
       <View style={styles.containter}>

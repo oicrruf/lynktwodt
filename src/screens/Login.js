@@ -8,7 +8,7 @@ import {
 } from 'react-native-responsive-screen';
 
 import {axiosRequest} from "../function/Request";
-import {access_token,checkSession} from "../function/Realmio";
+import {access_token,reLogin} from "../function/Realmio";
 
 const Login = ({navigation}) => {
 
@@ -16,7 +16,7 @@ const Login = ({navigation}) => {
   const [GetPass, setformPass] = useState(false);
 
   useEffect(() => {
-    checkSession(navigation);
+    reLogin(navigation);
   });
 
   const getValue = (value, type = false) => {
