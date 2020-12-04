@@ -5,12 +5,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {useHeaderHeight} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import moment from 'moment';
 
 const Journey = ({navigation}) => {
-  const headerHeight = useHeaderHeight();
   const [delivery, setDelivery] = useState([
     {
       id: 1,
@@ -20,7 +17,6 @@ const Journey = ({navigation}) => {
       document: '03459785-2',
       lon: '1.10245789',
       lat: '-2.1248548',
-      status: true,
     },
     {
       id: 2,
@@ -30,14 +26,13 @@ const Journey = ({navigation}) => {
       document: '03459785-2',
       lon: '1.10245789',
       lat: '-2.1248548',
-      status: false,
     },
   ]);
   return (
     <>
       <View style={styles.containter}>
         <View style={styles.body}>
-          <Text style={styles.title}>¡Inicia tu entrega!</Text>
+          <Text style={styles.title}>¡Tus entrega!</Text>
           <View style={styles.container}>
             <View style={styles.newPackage}>
               <View style={styles.box}>
@@ -58,7 +53,7 @@ const Journey = ({navigation}) => {
                     height: hp(6),
                   }}
                   onPress={() => {
-                    console.log('Nueva entrega');
+                    navigation.navigate('Detail');
                   }}
                 />
               </View>
