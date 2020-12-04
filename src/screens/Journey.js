@@ -36,30 +36,33 @@ const Journey = ({navigation}) => {
       <View style={styles.containter}>
         <View style={styles.body}>
           <View style={styles.header}>
-            <View style={styles.logoContainer}>
+            <ImageBackground
+              source={require('../assets/images/bg-header.png')}
+              style={styles.headerContainer}>
               <Image
                 style={styles.logo}
                 source={require('../assets/images/logo.png')}
               />
-            </View>
+            </ImageBackground>
           </View>
           <View style={styles.inputs}>
-            <Text>Bienvenido Ricardo Polanco</Text>
+            <Text style={styles.title}>¡Bienvenido</Text>
+            <Text style={styles.title}>Ricardo Polanco!</Text>
             <Picker
               selectedValue={plate.plate}
-              style={{height: hp(5), width: wp(90)}}
-              onValueChange={(itemValue, itemIndex) =>
-                setPlate({language: itemValue})
-              }>
+              style={styles.picker}
+              dropdownIconColor={'#FFFFFF'}
+              onValueChange={(item, i) => setPlate({language: item})}>
               <Picker.Item label="P469113" value="1" />
               <Picker.Item label="P886468" value="2" />
             </Picker>
           </View>
           <ImageBackground
-            source={require('../assets/images/background.png')}
+            source={require('../assets/images/bg-footer.png')}
             style={styles.buttonContainer}>
             <Button
               buttonStyle={styles.button}
+              titleStyle={styles.textButton}
               title="Iniciar viaje"
               onPress={() => {
                 navigation.navigate('Delivery');
@@ -90,6 +93,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#1F57E5',
   },
+  headerContainer: {
+    height: hp(100) / 3,
+    width: wp(100),
+    alignItems: 'center',
+    backgroundColor: '#1F57E5',
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
   logoContainer: {
     backgroundColor: '#FFF',
     width: wp(100),
@@ -100,7 +111,18 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: wp(20),
   },
   logo: {
-    backgroundColor: '#FFF',
+    marginBottom: hp(7),
+  },
+  title: {
+    fontSize: hp(3),
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  picker: {
+    marginTop: hp(4),
+    color: '#FFFFFF',
+    height: hp(5),
+    width: wp(90),
   },
   inputs: {
     height: hp(100) / 3,
@@ -119,6 +141,13 @@ const styles = StyleSheet.create({
   },
   button: {
     width: wp(90),
+    backgroundColor: '#FFF',
+  },
+  textButton: {
+    color: '#1F57E5',
+    textTransform: 'uppercase',
+    fontSize: hp(2.5),
+    fontWeight: '700',
   },
 });
 

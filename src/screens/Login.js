@@ -44,31 +44,38 @@ const Login = ({navigation}) => {
     <>
       <View style={styles.containter}>
         <View style={styles.header}>
-          <View style={styles.logoContainer}>
+          <ImageBackground
+            source={require('../assets/images/bg-header.png')}
+            style={styles.buttonContainer}>
             <Image
               style={styles.logo}
               source={require('../assets/images/logo.png')}
             />
-          </View>
+          </ImageBackground>
         </View>
-
         <View style={styles.inputs}>
           <Input
             placeholder="Usuario"
-            leftIcon={<Icon name="user" size={24} color="#F7D64B" />}
+            inputStyle={styles.textInputs}
+            inputContainerStyle={styles.containerInputs}
+            leftIcon={<Icon name="user" size={hp(2.5)} color="#F7D64B" />}
             onChangeText={(event) => getValue(event, 'user')}
           />
           <Input
             placeholder="Contraseña"
-            leftIcon={<Icon name="lock" size={24} color="#F7D64B" />}
+            inputStyle={styles.textInputs}
+            inputContainerStyle={styles.containerInputs}
+            leftIcon={<Icon name="lock" size={hp(2.5)} color="#F7D64B" />}
             onChangeText={(event) => getValue(event)}
+            secureTextEntry={true}
           />
         </View>
         <ImageBackground
-          source={require('../assets/images/background.png')}
+          source={require('../assets/images/bg-footer.png')}
           style={styles.buttonContainer}>
           <Button
             buttonStyle={styles.button}
+            titleStyle={styles.textButton}
             title="Ingresar"
             onPress={() => {
               LoginCheck();
@@ -85,13 +92,23 @@ const styles = StyleSheet.create({
     height: hp(100),
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#1F57E5',
   },
   header: {
     height: hp(100) / 3,
     width: wp(100),
-    justifyContent: 'center',
+    alignItems: 'flex-end',
+    backgroundColor: '#1F57E5',
+    resizeMode: 'stretch',
+    justifyContent: 'flex-end',
+  },
+  headerContainer: {
+    height: hp(100) / 3,
+    width: wp(100),
     alignItems: 'center',
     backgroundColor: '#1F57E5',
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
   logoContainer: {
     backgroundColor: '#FFF',
@@ -99,22 +116,33 @@ const styles = StyleSheet.create({
     height: hp(100) / 3,
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomEndRadius: wp(20),
-    borderBottomStartRadius: wp(20),
+    borderBottomEndRadius: wp(40),
+    borderBottomStartRadius: wp(40),
   },
   logo: {
-    backgroundColor: '#FFF',
+    marginBottom: hp(7),
   },
   inputs: {
     height: hp(100) / 3,
-    width: wp(100),
+    width: wp(95),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#1F57E5',
   },
-  buttonContainer: {},
+  textInputs: {
+    color: '#FFF',
+    fontSize: hp(2.5),
+  },
+  containerInputs: {borderBottomColor: '#FFFFFF'},
   button: {
     width: wp(90),
+    backgroundColor: '#FFF',
+  },
+  textButton: {
+    color: '#1F57E5',
+    textTransform: 'uppercase',
+    fontSize: hp(2.5),
+    fontWeight: '700',
   },
   buttonContainer: {
     height: hp(100) / 3,
