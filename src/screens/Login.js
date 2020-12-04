@@ -1,46 +1,44 @@
-import React,{useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button, Input} from 'react-native-elements';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, ImageBackground} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
-import {axiosRequest} from "../function/Request";
-import {access_token,reLogin} from "../function/Realmio";
+import {axiosRequest} from '../function/Request';
+import {access_token, reLogin} from '../function/Realmio';
 
 const Login = ({navigation}) => {
-
   const [GetUser, setformUser] = useState(false);
   const [GetPass, setformPass] = useState(false);
 
   useEffect(() => {
     reLogin(navigation);
-  });
+  }, []);
 
   const getValue = (value, type = false) => {
-    (type) ? setformUser(value) :  setformPass(value);
-  }
+    type ? setformUser(value) : setformPass(value);
+  };
 
-  const LoginCheck = () =>{
-
+  const LoginCheck = () => {
     // Formateo la informacion.
-    const datalogin = { "email":GetUser,"password":GetPass};
+    const datalogin = {email: GetUser, password: GetPass};
 
     // hago login y obtengo el token
-    axiosRequest('login','post',datalogin).then((resultAxios) => {  
-      // verifico la info
-     
-      if(resultAxios.data){
-         access_token(resultAxios.data);
-        // navigation.push("Journey");
-      }
- 
-    }).catch(function (error) {
-      console.log(error);
-    }); 
-  } 
+    axiosRequest('login', 'post', datalogin)
+      .then((resultAxios) => {
+        // verifico la info
+
+        if (resultAxios.data) {
+          access_token(resultAxios.data);
+          // navigation.navigate('Journey');
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -53,19 +51,22 @@ const Login = ({navigation}) => {
             />
           </View>
         </View>
+
         <View style={styles.inputs}>
           <Input
             placeholder="Usuario"
             leftIcon={<Icon name="user" size={24} color="#F7D64B" />}
-            onChangeText={event => getValue(event,"user")}
+            onChangeText={(event) => getValue(event, 'user')}
           />
           <Input
             placeholder="Contraseña"
             leftIcon={<Icon name="lock" size={24} color="#F7D64B" />}
-            onChangeText={event => getValue(event)}
+            onChangeText={(event) => getValue(event)}
           />
         </View>
-        <View style={styles.buttonContainer}>
+        <ImageBackground
+          source={require('../assets/images/background.png')}
+          style={styles.buttonContainer}>
           <Button
             buttonStyle={styles.button}
             title="Ingresar"
@@ -73,7 +74,7 @@ const Login = ({navigation}) => {
               LoginCheck();
             }}
           />
-        </View>
+        </ImageBackground>
       </View>
     </>
   );
@@ -111,15 +112,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#1F57E5',
   },
+  buttonContainer: {},
+  button: {
+    width: wp(90),
+  },
   buttonContainer: {
     height: hp(100) / 3,
     width: wp(100),
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#1F57E5',
-  },
-  button: {
-    width: wp(90),
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
 });
 
