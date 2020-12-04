@@ -15,27 +15,22 @@ const Journey = ({navigation}) => {
     checkSession(navigation);
   });
   // info AXIOS
-  const DataSave = readData();
+  const DataSave = readData()[0];
 
-  const CompanyInfo = {id: DataSave.id, access_token: DataSave.access_token};
-  console.log(CompanyInfo);
-
-  /// Get info placas y name users
-  axiosRequest('info', 'get', CompanyInfo)
-    .then((resultInfoCompany) => {
-      if (resultInfoCompany.data) {
-        const dataPlacas = resultInfoCompany.data[0];
-        navigation.push('Journey');
-      }
-    })
-    .catch(function (error) {
+  const CompanyInfo = {id:DataSave.id, access_token:DataSave.token};
+  
+  const [plate, setPlate] = useState({});
+  
+  axiosRequest('info','get',CompanyInfo).then((resultInfoCompany) => {  
+      let placas = resultInfoCompany.data
+      setPlate(placas);
+      
+    }).catch(function (error) {
       console.log(error);
-    });
-
-  const [plate, setPlate] = useState({
-    plate: 'P469113',
-  });
-
+    }); 
+    
+    console.log(plate);
+    
   return (
     <>
       <View style={styles.containter}>
