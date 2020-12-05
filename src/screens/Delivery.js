@@ -114,11 +114,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: hp(3),
     marginBottom: hp(3),
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#1F57E5',
   },
   subtitle: {
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     fontSize: hp(2.5),
     color: '#1F57E5',
   },
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     color: '#1F57E5',
     textTransform: 'uppercase',
     fontSize: hp(2.5),
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
   buttonItem: {
     height: wp(10),
@@ -189,15 +189,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   detailName: {
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     fontSize: hp(2.5),
     color: '#1F57E5',
   },
   detailDatetime: {
     flexDirection: 'row',
   },
-  date: {fontSize: hp(2), color: '#1F57E5'},
-  time: {fontSize: hp(2), color: '#1F57E5'},
+  date: {fontSize: hp(2), color: '#1F57E5', fontFamily: 'Poppins-Regular'},
+  time: {fontSize: hp(2), color: '#1F57E5', fontFamily: 'Poppins-Regular'},
   status: {
     width: hp(7),
     justifyContent: 'center',

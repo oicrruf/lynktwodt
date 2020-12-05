@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: hp(3),
     marginBottom: hp(3),
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
     color: '#1F57E5',
   },
   form: {
@@ -115,11 +115,12 @@ const styles = StyleSheet.create({
     color: '#1F57E5',
     textTransform: 'uppercase',
     fontSize: hp(2.5),
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
   textInputs: {
     color: '#FFF',
     fontSize: hp(2.5),
+    fontFamily: 'Poppins-Regular',
   },
   containerInputs: {borderBottomColor: '#939090'},
 });

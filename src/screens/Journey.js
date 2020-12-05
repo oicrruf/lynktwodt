@@ -10,27 +10,26 @@ import {axiosRequest} from '../function/Request';
 import {checkSession, readData} from '../function/Realmio';
 
 const Journey = ({navigation}) => {
-
   /// Verifico la session del usuario
   useEffect(() => {
     checkSession(navigation);
-  },[]);
+  }, []);
 
   // info AXIOS
   const DataSave = readData()[0];
-  const CompanyInfo = {id:DataSave.id, access_token:DataSave.token};
+  const CompanyInfo = {id: DataSave.id, access_token: DataSave.token};
   const [plate, setPlate] = useState({});
-  
-  useEffect(() => {
-    axiosRequest('info','get',CompanyInfo).then((resultInfoCompany) => {  
-      let placas = resultInfoCompany.data
 
-    }).catch(function (error) {
-      console.log(error);
-    }); 
+  useEffect(() => {
+    axiosRequest('info', 'get', CompanyInfo)
+      .then((resultInfoCompany) => {
+        let placas = resultInfoCompany.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }, []);
-  
-    
+
   return (
     <>
       <View style={styles.containter}>
@@ -114,8 +113,8 @@ const styles = StyleSheet.create({
     marginBottom: hp(7),
   },
   title: {
+    fontFamily: 'Poppins-Bold',
     fontSize: hp(3),
-    fontWeight: '700',
     color: '#FFFFFF',
   },
   picker: {
@@ -147,7 +146,7 @@ const styles = StyleSheet.create({
     color: '#1F57E5',
     textTransform: 'uppercase',
     fontSize: hp(2.5),
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
 });
 

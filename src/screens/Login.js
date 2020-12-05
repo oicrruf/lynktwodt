@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
   textInputs: {
     color: '#FFF',
     fontSize: hp(2.5),
+    fontFamily: 'Poppins-Regular',
   },
   containerInputs: {borderBottomColor: '#FFFFFF'},
   button: {
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
     color: '#1F57E5',
     textTransform: 'uppercase',
     fontSize: hp(2.5),
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
   buttonContainer: {
     height: hp(100) / 3,
