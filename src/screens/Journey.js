@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Button, Input} from 'react-native-elements';
-import {StyleSheet, View, Image, Text, ImageBackground} from 'react-native';
+import {StyleSheet, View, Image, Text, ImageBackground,PermissionsAndroid} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {
   widthPercentageToDP as wp,
@@ -9,6 +9,7 @@ import {
 import {axiosRequest} from '../function/Request';
 import {checkSession, readData} from '../function/Realmio';
 import moment from "moment";
+import {requestLocationPermission} from "../function/requesPermisos";
 
 const Journey = ({navigation}) => {
   /// Verifico la session del usuario
@@ -22,7 +23,8 @@ const Journey = ({navigation}) => {
   const [plate, setPlate] = useState(false);
   const [plateSelection, setPlateSelection] = useState(false);
 
-  console.log(DataSave);
+
+
   if (!plate) {
     axiosRequest('info', 'get', CompanyInfo)
       .then((resultInfoCompany) => {
@@ -58,9 +60,9 @@ const Journey = ({navigation}) => {
         estado:1,
         coordenadas:"false",
       }
-        console.log(dataToSend);
-
-        navigation.navigate("Delivery");
+        console.log(PermissionsAndroid.RESULTS.GRANTED);
+        requestLocationPermission();
+       // navigation.navigate("Delivery");
     }
 
   return (
