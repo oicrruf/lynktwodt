@@ -46,7 +46,6 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageT
     schema: [
       {
         name: 'RuteViaje',
-        primaryKey: 'route_id',
         properties: {
           route_id : 'string',
             fecha:"string",
@@ -54,7 +53,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageT
             nombreBeneficiario:"string",
             duiBeneficiario:"string",
             checkpoint:"string",
-            state: "string"
+            state: "int"
         },
       },
     ],
@@ -218,7 +217,16 @@ export function SaveRutaViaje(obj){
 
 export function SaveParadaViaje(obj){
   
-
+  Rv = new Realm({ path: 'RutaParadaDatabase.realm' });
+  try {
+    Rv.write(() => {
+      let DataUsers = Rv.objects('RuteViaje');
+      let UserData = Rv.create('RuteViaje', obj);
+  });
+  
+  }catch (error) {
+    console.log(error);
+  }
 }
 
 
@@ -271,6 +279,26 @@ export function readDataRute() {
 
  
   Users = new Realm({ path: 'RuteViajesDatabase.realm' });
+  let data = "";
+  try {
+    Users.write(() => {
+      let DataUsers = Users.objects('RuteViaje');
+      data = DataUsers;
+
+  });
+  
+  }catch (error) {
+    console.log(error);
+  }
+
+  return data;
+}
+
+
+export function readDataParadaRute() {
+
+ 
+  Users = new Realm({ path: 'RutaParadaDatabase.realm' });
   let data = "";
   try {
     Users.write(() => {

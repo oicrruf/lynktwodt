@@ -100,11 +100,12 @@ const Journey = ({navigation}) => {
                     .then((result) => {
                       /// Guardo Ruta iniciadad
                        SaveRutaViaje(dataToSend);
-                      
+                       navigation.push("Delivery");
                     })
                     .catch(function (error) {
                       ///Guardo ruta iniciada
                          SaveRutaViaje(dataToSend);
+                         navigation.push("Delivery");
                     });
 
                   }

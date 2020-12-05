@@ -6,7 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {checkSession, readData,SaveRutaViaje,checkRute,cleanRuteViaje,readDataRute} from '../function/Realmio';
+import {checkSession, readData,SaveRutaViaje,SaveParadaViaje,checkRute,cleanRuteViaje,readDataRute,} from '../function/Realmio';
 import moment from "moment";
 import {axiosRequest} from '../function/Request';
 const Detail = ({navigation}) => {
@@ -41,9 +41,13 @@ const Detail = ({navigation}) => {
     axiosRequest('beneficiario', 'post',datauser )
     .then((resultAxios) => {
       console.log(resultAxios.data);
+      SaveParadaViaje(datauser);
+      navigation.push("Delivery");
     })
     .catch(function (error) {
       console.log(error);
+      SaveParadaViaje(datauser);
+      navigation.push("Delivery");
     });
 
   };

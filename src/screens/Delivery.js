@@ -6,28 +6,12 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {checkSession, readData,SaveRutaViaje,checkRute,cleanRuteViaje,readDataParadaRute} from '../function/Realmio';
 
 const Journey = ({navigation}) => {
-  const [delivery, setDelivery] = useState([
-    {
-      id: 1,
-      date: '2020-12-04',
-      time: '10:26 a.m.',
-      name: 'Juan Ramos',
-      document: '03459785-2',
-      lon: '1.10245789',
-      lat: '-2.1248548',
-    },
-    {
-      id: 2,
-      date: '2020-12-04',
-      time: '10:26 a.m.',
-      name: 'Leonardo Mancía',
-      document: '03459785-2',
-      lon: '1.10245789',
-      lat: '-2.1248548',
-    },
-  ]);
+  const [delivery, setDelivery] = useState(readDataParadaRute());
+
+  console.log(delivery);
   return (
     <>
       <View style={styles.containter}>
@@ -50,7 +34,7 @@ const Journey = ({navigation}) => {
                   icon={<Icon name="plus" size={15} color="#1F57E5" />}
                   buttonStyle={styles.buttonItem}
                   onPress={() => {
-                    navigation.navigate('Detail');
+                    navigation.push('Detail');
                   }}
                 />
               </View>
@@ -58,7 +42,7 @@ const Journey = ({navigation}) => {
             <FlatList
               data={delivery}
               renderItem={({item}) => (
-                <View style={styles.package} key={item.id}>
+                <View style={styles.package} key={item.route_id}>
                   <View style={styles.box}>
                     <Image
                       source={require('../assets/images/box-delivery.png')}
@@ -67,10 +51,10 @@ const Journey = ({navigation}) => {
                     />
                   </View>
                   <View style={styles.detail}>
-                    <Text style={styles.detailName}>{item.name}</Text>
+                    <Text style={styles.detailName}>{item.nombreBeneficiario}</Text>
                     <View style={styles.detailDatetime}>
-                      <Text style={styles.date}>{item.date}, </Text>
-                      <Text style={styles.time}>{item.time}</Text>
+                      <Text style={styles.date}>{item.fecha}, </Text>
+                      <Text style={styles.time}>{item.hora}</Text>
                     </View>
                   </View>
                   <View style={styles.status}>
