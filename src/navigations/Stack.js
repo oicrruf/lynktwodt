@@ -39,7 +39,7 @@ const LoginStackNavigation = ({navigation}) => {
             <Button
               icon={<Icon name="sign-out" size={hp(3)} color="#FFFFFF" />}
               onPress={() => {
-                cleanLogin(), navigation.navigate('Login');
+                cleanLogin(), navigation.push('Login');
               }}
               color="#1F57E5"
               type="clear"
@@ -83,7 +83,7 @@ const JourneyStackNavigation = ({navigation}) => {
             <Button
               icon={<Icon name="sign-out" size={hp(3)} color="#1F57E5" />}
               onPress={() => {
-                cleanLogin(), navigation.navigate('Login');
+                cleanLogin(), navigation.push('Login');
               }}
               color="#1F57E5"
               type="clear"
@@ -112,7 +112,7 @@ const JourneyStackNavigation = ({navigation}) => {
             <Button
               icon={<Icon name="sign-out" size={hp(3)} color="#FFFFFF" />}
               onPress={() => {
-                cleanLogin(), navigation.navigate('Login');
+                cleanLogin(), navigation.push('Login');
               }}
               type="clear"
               buttonStyle={{

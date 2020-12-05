@@ -28,7 +28,6 @@ const Login = ({navigation}) => {
     // hago login y obtengo el token
     axiosRequest('login', 'post', datalogin)
       .then((resultAxios) => {
-        console.log(resultAxios.data.errors);
         // verifico la info
         if (resultAxios.data.errors) {
           alert(resultAxios.data.message);
