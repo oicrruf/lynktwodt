@@ -8,6 +8,7 @@ import {
 } from 'react-native-responsive-screen';
 import {axiosRequest} from '../function/Request';
 import {checkSession, readData} from '../function/Realmio';
+import moment from "moment";
 
 const Journey = ({navigation}) => {
   /// Verifico la session del usuario
@@ -21,6 +22,7 @@ const Journey = ({navigation}) => {
   const [plate, setPlate] = useState(false);
   const [plateSelection, setPlateSelection] = useState(false);
 
+  console.log(DataSave);
   if (!plate) {
     axiosRequest('info', 'get', CompanyInfo)
       .then((resultInfoCompany) => {
@@ -46,6 +48,21 @@ const Journey = ({navigation}) => {
 
     ///////////////// send info ////////////////
 
+    const IniciandoRuta = () =>{
+
+      let dataToSend = {
+        fecha:moment().format('YYYY/MM/DD'),
+        hora:moment().format('HH:mm'),
+        nombre:DataSave.user,
+        placa:plateSelection.license_plate,
+        estado:1,
+        coordenadas:"false",
+      }
+        console.log(dataToSend);
+
+        navigation.navigate("Delivery");
+    }
+
   return (
     <>
       <View style={styles.containter}>
@@ -62,7 +79,7 @@ const Journey = ({navigation}) => {
           </View>
           <View style={styles.inputs}>
             <Text style={styles.title}>¡Bienvenido</Text>
-            <Text style={styles.title}>Ricardo Polanco!</Text>
+            <Text style={styles.title}>{DataSave.user}!</Text>
             <Picker
               selectedValue={plateSelection.license_plate}
               style={styles.picker}
@@ -82,7 +99,7 @@ const Journey = ({navigation}) => {
               titleStyle={styles.textButton}
               title="Iniciar viaje"
               onPress={() => {
-                navigation.navigate('Delivery');
+                IniciandoRuta()
               }}
             />
           </ImageBackground>

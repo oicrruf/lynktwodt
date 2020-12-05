@@ -28,11 +28,11 @@ const Login = ({navigation}) => {
     // hago login y obtengo el token
     axiosRequest('login', 'post', datalogin)
       .then((resultAxios) => {
+        console.log(resultAxios.data);
         // verifico la info
-        console.log(resultAxios);
         if (resultAxios.data) {
           access_token(resultAxios.data);
-          // navigation.navigate('Journey');
+           navigation.navigate('Journey');
         }
       })
       .catch(function (error) {
