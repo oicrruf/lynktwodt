@@ -18,17 +18,31 @@ const Journey = ({navigation}) => {
   // info AXIOS
   const DataSave = readData()[0];
   const CompanyInfo = {id: DataSave.id, access_token: DataSave.token};
-  const [plate, setPlate] = useState({});
+  const [plate, setPlate] = useState(false);
+  const [plateSelection, setPlateSelection] = useState(false);
 
-  useEffect(() => {
+  if (!plate) {
     axiosRequest('info', 'get', CompanyInfo)
       .then((resultInfoCompany) => {
         let placas = resultInfoCompany.data;
+        console.log(placas);
+        let dataRender = placas.map((data) => {
+          return (
+            <Picker.Item
+              label={data.license_plate}
+              value={data.license_plate}
+              key={data.license_plate}
+            />
+          );
+        });
+        setPlate(dataRender);
+
+        console.log(plate);
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
+  }
 
   return (
     <>
@@ -48,12 +62,14 @@ const Journey = ({navigation}) => {
             <Text style={styles.title}>¡Bienvenido</Text>
             <Text style={styles.title}>Ricardo Polanco!</Text>
             <Picker
-              selectedValue={plate.plate}
+              selectedValue={plateSelection.license_plate}
               style={styles.picker}
               dropdownIconColor={'#FFFFFF'}
-              onValueChange={(item, i) => setPlate({language: item})}>
-              <Picker.Item label="P469113" value="1" />
-              <Picker.Item label="P886468" value="2" />
+              onValueChange={(item, i) =>
+                setPlateSelection({license_plate: item})
+              }>
+              <Picker.Item label="Seleccionar Placa" value="" />
+              {plate}
             </Picker>
           </View>
           <ImageBackground
