@@ -7,7 +7,8 @@ export function axiosRequest(endpoint,method,data) {
         let AllEnpoint = {
           login : "https://www.lynktwo.com/api/auth/login",
           info : "https://www.lynktwo.com/api/auth/driverInfo/",
-          saveRute : "https://www.lynktwo.com/api/auth/driverInfooooo/",
+          saveRute : "http://dev.lynktwo.com/api/route",
+          beneficiario: 'http://dev.lynktwo.com/api/beneficiers',
         };
 
         let header = {};

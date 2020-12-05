@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {Button, Input} from 'react-native-elements';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import {
@@ -6,19 +6,48 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import {checkSession, readData,SaveRutaViaje,checkRute,cleanRuteViaje,readDataRute} from '../function/Realmio';
+import moment from "moment";
+import {axiosRequest} from '../function/Request';
 const Detail = ({navigation}) => {
-  const [detail, setDetail] = useState([
-    {
-      id: 1,
-      date: '2020-12-04',
-      time: '10:26 a.m.',
-      name: 'Juan Ramos',
-      document: '03459785-2',
-      lon: '1.10245789',
-      lat: '-2.1248548',
-    },
-  ]);
+  useEffect(() => {
+    checkSession(navigation);
+  }, []);
+
+  
+  const [GetName, setformName] = useState(false);
+  const [GetDui, setformDui] = useState(false);
+
+
+  const getValue = (value, type = false) => {
+    type ? setformName(value) : setformDui(value);
+  };
+
+
+  const SaveParada = () => {
+   const dataRute = readDataRute()[0];
+   // Formateo la informacion.
+   const datauser =  {
+    route_id : dataRute.codigoRuta,
+     fecha:moment().format('YYYY/MM/DD'),
+     hora:moment().format('HH:mm'),
+     nombreBeneficiario:GetName,
+     duiBeneficiario:GetDui,
+     checkpoint:"none",
+     state: 1
+    };
+    
+    console.log(datauser);
+    axiosRequest('beneficiario', 'post',datauser )
+    .then((resultAxios) => {
+      console.log(resultAxios.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  };
+
   return (
     <>
       <View style={styles.containter}>
@@ -31,6 +60,7 @@ const Detail = ({navigation}) => {
             />
             <View style={styles.inputs}>
               <Input
+               onChangeText={(event) => getValue(event,"nombre")}
                 placeholder="Nombre"
                 inputStyle={styles.textInputs}
                 inputContainerStyle={styles.containerInputs}
@@ -38,6 +68,7 @@ const Detail = ({navigation}) => {
               />
               <Input
                 placeholder="DUI"
+                onChangeText={(event) => getValue(event)}
                 inputStyle={styles.textInputs}
                 inputContainerStyle={styles.containerInputs}
                 leftIcon={
@@ -52,7 +83,7 @@ const Detail = ({navigation}) => {
               titleStyle={styles.textButton}
               title="Guardar"
               onPress={() => {
-                navigation.navigate('Delivery');
+                SaveParada();
               }}
             />
           </View>

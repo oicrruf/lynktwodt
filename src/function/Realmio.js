@@ -28,13 +28,13 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageT
         primaryKey: 'id',
         properties: {
             id : 'int',
-            code:"string",
+            codigoRuta:"string",
             fecha:"string",
             hora:"string",
-            nombre:"string",
-            placa:"string",
-            estado:"int",
-            coordenadas:"string",
+            nombreMotorista:"string",
+            placaCamion:"string",
+            status:"int",
+            geolocalizacion:"string",
         },
       },
     ],
@@ -46,14 +46,14 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageT
     schema: [
       {
         name: 'RuteViaje',
-        primaryKey: 'code',
+        primaryKey: 'route_id',
         properties: {
-            code : 'string',
+          route_id : 'string',
             fecha:"string",
             hora:"string",
-            nombre:"string",
-            dui:"string",
-            coordenadas:"string",
+            nombreBeneficiario:"string",
+            duiBeneficiario:"string",
+            checkpoint:"string",
             state: "string"
         },
       },
@@ -264,4 +264,24 @@ export function cleanRuteViaje() {
   }catch (error) {
     console.log('Error en realmio.js');
   }
+}
+
+
+export function readDataRute() {
+
+ 
+  Users = new Realm({ path: 'RuteViajesDatabase.realm' });
+  let data = "";
+  try {
+    Users.write(() => {
+      let DataUsers = Users.objects('RuteViaje');
+      data = DataUsers;
+
+  });
+  
+  }catch (error) {
+    console.log(error);
+  }
+
+  return data;
 }

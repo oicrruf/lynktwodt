@@ -81,32 +81,30 @@ const Journey = ({navigation}) => {
               // formo objeto de envio 
               let dataToSend = {
                       id:1,
-                      code:text,
+                      codigoRuta:text,
                       fecha:moment().format('YYYY/MM/DD'),
                       hora:moment().format('HH:mm'),
-                      nombre:DataSave.user,
-                      placa:plateSelection.license_plate,
-                      estado:1,
-                      coordenadas:"",
+                      nombreMotorista:DataSave.user,
+                      placaCamion:plateSelection.license_plate,
+                      status:1,
+                      geolocalizacion:"",
                     }
 
                 // traigo mi geo localizacion
                 Geolocation.getCurrentPosition(
                   position => {
                     const initialPosition = position;
-                    dataToSend.coordenadas = initialPosition.coords.latitude + "/" +initialPosition.coords.longitude;
+                    dataToSend.geolocalizacion = initialPosition.coords.latitude + "/" +initialPosition.coords.longitude;
                     /// todo listo para enviar.
-                    axiosRequest('saveRute', 'post', CompanyInfo)
+                    axiosRequest('saveRute', 'post', dataToSend)
                     .then((result) => {
-                      console.log(result.data);
                       /// Guardo Ruta iniciadad
-                      SaveRutaViaje(dataToSend);
-
+                       SaveRutaViaje(dataToSend);
+                      
                     })
                     .catch(function (error) {
-
                       ///Guardo ruta iniciada
-                      SaveRutaViaje(dataToSend);
+                         SaveRutaViaje(dataToSend);
                     });
 
                   }
