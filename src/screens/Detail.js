@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import {Button, Input} from 'react-native-elements';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image,PermissionsAndroid} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -9,6 +9,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {checkSession, readData,SaveRutaViaje,SaveParadaViaje,checkRute,cleanRuteViaje,readDataRute,} from '../function/Realmio';
 import moment from "moment";
 import {axiosRequest} from '../function/Request';
+import Geolocation from '@react-native-community/geolocation';
+
 const Detail = ({navigation}) => {
   useEffect(() => {
     checkSession(navigation);
@@ -24,31 +26,57 @@ const Detail = ({navigation}) => {
   };
 
 
-  const SaveParada = () => {
-   const dataRute = readDataRute()[0];
-   // Formateo la informacion.
-   const datauser =  {
-    route_id : dataRute.codigoRuta,
-     fecha:moment().format('YYYY/MM/DD'),
-     hora:moment().format('HH:mm'),
-     nombreBeneficiario:GetName,
-     duiBeneficiario:GetDui,
-     checkpoint:"none",
-     state: 1
-    };
-    
-    console.log(datauser);
-    axiosRequest('beneficiario', 'post',datauser )
-    .then((resultAxios) => {
-      console.log(resultAxios.data);
-      SaveParadaViaje(datauser);
-      navigation.push("Delivery");
-    })
-    .catch(function (error) {
-      console.log(error);
-      SaveParadaViaje(datauser);
-      navigation.push("Delivery");
-    });
+  async function SaveParada() {
+    try {
+      const granted = await PermissionsAndroid.request(
+       
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          'title': 'Lynktwo',
+          'message': 'Para poder utilizar Lynktwo Dominacion territorial es necesario aceptar el permiso de geolocalizacion.'
+        },
+      );
+      
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+
+        const dataRute = readDataRute()[0];
+
+        const datauser =  {
+          route_id : dataRute.codigoRuta,
+           fecha:moment().format('YYYY/MM/DD'),
+           hora:moment().format('HH:mm'),
+           nombreBeneficiario:GetName,
+           duiBeneficiario:GetDui,
+           checkpoint:"none",
+           state: 1
+          };
+
+          Geolocation.getCurrentPosition(
+            position => {
+              const initialPosition = position;
+              datauser.checkpoint = initialPosition.coords.latitude + "/" +initialPosition.coords.longitude;
+              console.log(datauser);
+                /// envio la notificaciones 
+                axiosRequest('beneficiario', 'post',datauser )
+                .then((resultAxios) => {
+                  console.log(resultAxios.data);
+                  SaveParadaViaje(datauser);
+                  navigation.push("Delivery");
+                })
+                .catch(function (error) {
+                  console.log(error);
+                  SaveParadaViaje(datauser);
+                  navigation.push("Delivery");
+                });
+            }
+          );
+      } else {
+        alert("Sin permisos");
+      }
+
+    } catch (err) {
+      console.warn(err)
+    }
 
   };
 
