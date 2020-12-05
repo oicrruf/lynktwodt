@@ -10,31 +10,40 @@ import {axiosRequest} from '../function/Request';
 import {checkSession, readData} from '../function/Realmio';
 
 const Journey = ({navigation}) => {
-
   /// Verifico la session del usuario
   useEffect(() => {
     checkSession(navigation);
-  },[]);
+  }, []);
 
   // info AXIOS
   const DataSave = readData()[0];
-  const CompanyInfo = {id:DataSave.id, access_token:DataSave.token};
+  const CompanyInfo = {id: DataSave.id, access_token: DataSave.token};
   const [plate, setPlate] = useState(false);
   const [plateSelection, setPlateSelection] = useState(false);
-  
-    if(!plate){
-      axiosRequest('info','get',CompanyInfo).then((resultInfoCompany) => {  
+
+  if (!plate) {
+    axiosRequest('info', 'get', CompanyInfo)
+      .then((resultInfoCompany) => {
         let placas = resultInfoCompany.data;
         console.log(placas);
-        let  dataRender = placas.map((data) => { return(<Picker.Item label={data.license_plate} value={data.license_plate}  key={data.license_plate}/>)});
+        let dataRender = placas.map((data) => {
+          return (
+            <Picker.Item
+              label={data.license_plate}
+              value={data.license_plate}
+              key={data.license_plate}
+            />
+          );
+        });
         setPlate(dataRender);
-  
-        console.log(plate);
-      }).catch(function (error) {
-        console.log(error);
-      }); 
 
-    }
+        console.log(plate);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
     ///////////////// send info ////////////////
 
   return (
@@ -58,8 +67,10 @@ const Journey = ({navigation}) => {
               selectedValue={plateSelection.license_plate}
               style={styles.picker}
               dropdownIconColor={'#FFFFFF'}
-              onValueChange={(item, i) => setPlateSelection({license_plate: item})}>
-               <Picker.Item label="Seleccionar Placa" value="" />
+              onValueChange={(item, i) =>
+                setPlateSelection({license_plate: item})
+              }>
+              <Picker.Item label="Seleccionar Placa" value="" />
               {plate}
             </Picker>
           </View>
@@ -120,8 +131,8 @@ const styles = StyleSheet.create({
     marginBottom: hp(7),
   },
   title: {
+    fontFamily: 'Poppins-Bold',
     fontSize: hp(3),
-    fontWeight: '700',
     color: '#FFFFFF',
   },
   picker: {
@@ -153,7 +164,7 @@ const styles = StyleSheet.create({
     color: '#1F57E5',
     textTransform: 'uppercase',
     fontSize: hp(2.5),
-    fontWeight: '700',
+    fontFamily: 'Poppins-Bold',
   },
 });
 
