@@ -13,7 +13,7 @@ import React, {useState, useEffect} from 'react';
         );
         
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-           
+         
         } else {
           alert("Sin permisos");
         }

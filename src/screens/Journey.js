@@ -7,30 +7,34 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {axiosRequest} from '../function/Request';
-import {checkSession, readData} from '../function/Realmio';
+import {checkSession, readData,SaveRutaViaje,checkRute,cleanRuteViaje} from '../function/Realmio';
 import moment from "moment";
 import {requestLocationPermission} from "../function/requesPermisos";
+import Geolocation from '@react-native-community/geolocation';
 
 const Journey = ({navigation}) => {
   /// Verifico la session del usuario
   useEffect(() => {
     checkSession(navigation);
+    checkRute(navigation);
   }, []);
 
   // info AXIOS
   const DataSave = readData()[0];
   const CompanyInfo = {id: DataSave.id, access_token: DataSave.token};
   const [plate, setPlate] = useState(false);
-  const [plateSelection, setPlateSelection] = useState(false);
-
-
+  const [plateSelection, setPlateSelection] = useState("");
 
   if (!plate) {
     axiosRequest('info', 'get', CompanyInfo)
       .then((resultInfoCompany) => {
+        
         let placas = resultInfoCompany.data;
-        console.log(placas);
-        let dataRender = placas.map((data) => {
+       
+        /// seleccion placa actual de conductor.
+        setPlateSelection(placas.placaPropia);
+
+        let dataRender = placas.placas.map((data) => {
           return (
             <Picker.Item
               label={data.license_plate}
@@ -40,8 +44,6 @@ const Journey = ({navigation}) => {
           );
         });
         setPlate(dataRender);
-
-        console.log(plate);
       })
       .catch(function (error) {
         console.log(error);
@@ -50,19 +52,69 @@ const Journey = ({navigation}) => {
 
     ///////////////// send info ////////////////
 
-    const IniciandoRuta = () =>{
+    async function  IniciandoRuta(){
+    
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" + plateSelection.license_plate;
+      
+        for (var i = 0; i < 10; i++){
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+  console.log(text);
 
-      let dataToSend = {
-        fecha:moment().format('YYYY/MM/DD'),
-        hora:moment().format('HH:mm'),
-        nombre:DataSave.user,
-        placa:plateSelection.license_plate,
-        estado:1,
-        coordenadas:"false",
-      }
-        console.log(PermissionsAndroid.RESULTS.GRANTED);
-        requestLocationPermission();
-       // navigation.navigate("Delivery");
+      if((plateSelection.license_plate != "") && (plateSelection != "")){
+        try {
+            const granted = await PermissionsAndroid.request(
+             
+              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+              {
+                'title': 'Lynktwo',
+                'message': 'Para poder utilizar Lynktwo Dominacion territorial es necesario aceptar el permiso de geolocalizacion.'
+              },
+            );
+            
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+
+              /// permisos aceptados  
+
+              // formo objeto de envio 
+              let dataToSend = {
+                      id:1,
+                      fecha:moment().format('YYYY/MM/DD'),
+                      hora:moment().format('HH:mm'),
+                      nombre:DataSave.user,
+                      placa:plateSelection.license_plate,
+                      estado:1,
+                      coordenadas:"",
+                    }
+
+                // traigo mi geo localizacion
+                Geolocation.getCurrentPosition(
+                  position => {
+                    const initialPosition = position;
+                    dataToSend.coordenadas = initialPosition.coords.latitude + "/" +initialPosition.coords.longitude;
+                    /// todo listo para enviar.
+                    axiosRequest('saveRute', 'post', CompanyInfo)
+                    .then((result) => {
+                      console.log(result.data);
+                    })
+                    .catch(function (error) {
+                      ///error en envio entonces lo guardo.....
+                      SaveRutaViaje(dataToSend);
+                    });
+
+                  }
+                );
+            } else {
+              alert("Sin permisos");
+            }
+    
+          } catch (err) {
+            console.warn(err)
+          }
+        }else{
+          alert("Debe seleccionar una placa para iniciar ruta.");
+        }
     }
 
   return (

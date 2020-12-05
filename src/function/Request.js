@@ -7,6 +7,7 @@ export function axiosRequest(endpoint,method,data) {
         let AllEnpoint = {
           login : "https://www.lynktwo.com/api/auth/login",
           info : "https://www.lynktwo.com/api/auth/driverInfo/",
+          saveRute : "https://www.lynktwo.com/api/auth/driverInfooooo/",
         };
 
         let header = {};
@@ -21,7 +22,7 @@ export function axiosRequest(endpoint,method,data) {
           break;
         
           default:
-            header = {};
+            header = {'Content-Type': 'application/json'};
           break;
 
           }

@@ -20,6 +20,27 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageT
   });
 
   
+  const RuteViajeSchema = new Realm({
+    path: 'RuteViajeDatabase.realm',
+    schema: [
+      {
+        name: 'RuteViaje',
+        primaryKey: 'id',
+        properties: {
+            id : 'int',
+            fecha:"string",
+            hora:"string",
+            nombre:"string",
+            placa:"string",
+            estado:"int",
+            coordenadas:"string",
+        },
+      },
+    ],
+  });
+
+
+
   /// save access_token
 export function access_token(data,CheckStatus = false) {
     if(data){
@@ -139,5 +160,67 @@ export function checkSession(navigation){
   
   }catch (error) {
     console.log(error);
+  }
+}
+
+
+export function SaveRutaViaje(obj){
+  
+
+  Rv = new Realm({ path: 'RuteViajeDatabase.realm' });
+  try {
+    Rv.write(() => {
+      let DataUsers = Rv.objects('RuteViaje');
+      Rv.delete(DataUsers);
+      let UserData = Rv.create('RuteViaje', obj);
+  });
+  
+  }catch (error) {
+    console.log(error);
+  }
+}
+
+
+export function checkRute(navigation){
+  
+
+  Rv = new Realm({ path: 'RuteViajeDatabase.realm' });
+  try {
+    Rv.write(() => {
+
+      let DataUsers = Rv.objects('RuteViaje');
+     
+        if(DataUsers.length > 0){
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'Delivery'}],
+          });
+        }else{
+          
+        }
+    
+      
+  });
+  
+  }catch (error) {
+    console.log(error);
+  }
+}
+
+
+
+export function cleanRuteViaje() {
+
+  Rv = new Realm({ path: 'RuteViajeDatabase.realm' });
+
+  try {
+    Rv.write(() => {
+      // Create a book object
+      let DataUsers = Rv.objects('RuteViaje');
+      Rv.delete(DataUsers);
+  });
+
+  }catch (error) {
+    console.log('Error en realmio.js');
   }
 }
