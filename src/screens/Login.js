@@ -28,12 +28,16 @@ const Login = ({navigation}) => {
     // hago login y obtengo el token
     axiosRequest('login', 'post', datalogin)
       .then((resultAxios) => {
-        console.log(resultAxios.data);
+        console.log(resultAxios.data.errors);
         // verifico la info
-        if (resultAxios.data) {
-          access_token(resultAxios.data);
+        if (resultAxios.data.errors) {
+          alert(resultAxios.data.message);
+
+        }else{
+            access_token(resultAxios.data);
            navigation.navigate('Journey');
         }
+
       })
       .catch(function (error) {
         console.log(error);
