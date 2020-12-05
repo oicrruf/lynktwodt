@@ -32,17 +32,24 @@ const Detail = ({navigation}) => {
             <View style={styles.inputs}>
               <Input
                 placeholder="Nombre"
-                leftIcon={<Icon name="user" size={15} color="#1F57E5" />}
+                inputStyle={styles.textInputs}
+                inputContainerStyle={styles.containerInputs}
+                leftIcon={<Icon name="user" size={hp(2.5)} color="#1F57E5" />}
               />
               <Input
                 placeholder="DUI"
-                leftIcon={<Icon name="id-card" size={15} color="#1F57E5" />}
+                inputStyle={styles.textInputs}
+                inputContainerStyle={styles.containerInputs}
+                leftIcon={
+                  <Icon name="id-card" size={hp(2.5)} color="#1F57E5" />
+                }
               />
             </View>
           </View>
           <View style={styles.buttonContainer}>
             <Button
               buttonStyle={styles.button}
+              titleStyle={styles.textButton}
               title="Guardar"
               onPress={() => {
                 navigation.navigate('Delivery');
@@ -70,13 +77,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: hp(2.5),
-    marginBottom: hp(1),
+    fontSize: hp(3),
+    marginBottom: hp(3),
     fontWeight: '700',
+    color: '#1F57E5',
   },
   form: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   buttonContainer: {
@@ -99,6 +107,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  button: {
+    width: wp(90),
+    backgroundColor: '#41E932',
+  },
+  textButton: {
+    color: '#1F57E5',
+    textTransform: 'uppercase',
+    fontSize: hp(2.5),
+    fontWeight: '700',
+  },
+  textInputs: {
+    color: '#FFF',
+    fontSize: hp(2.5),
+  },
+  containerInputs: {borderBottomColor: '#939090'},
 });
 
 export default Detail;

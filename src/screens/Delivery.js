@@ -47,11 +47,8 @@ const Journey = ({navigation}) => {
               </View>
               <View style={styles.plus}>
                 <Button
-                  icon={<Icon name="plus" size={15} color="white" />}
-                  buttonStyle={{
-                    width: hp(6),
-                    height: hp(6),
-                  }}
+                  icon={<Icon name="plus" size={15} color="#1F57E5" />}
+                  buttonStyle={styles.buttonItem}
                   onPress={() => {
                     navigation.navigate('Detail');
                   }}
@@ -72,17 +69,17 @@ const Journey = ({navigation}) => {
                   <View style={styles.detail}>
                     <Text style={styles.detailName}>{item.name}</Text>
                     <View style={styles.detailDatetime}>
-                      <Text>{item.date}, </Text>
-                      <Text>{item.time}</Text>
+                      <Text style={styles.date}>{item.date}, </Text>
+                      <Text style={styles.time}>{item.time}</Text>
                     </View>
                   </View>
                   <View style={styles.status}>
                     <Button
-                      icon={<Icon name="check" size={15} color="white" />}
-                      buttonStyle={{
-                        width: hp(6),
-                        height: hp(6),
-                      }}
+                      buttonStyle={[
+                        styles.buttonItem,
+                        {backgroundColor: '#41E932'},
+                      ]}
+                      icon={<Icon name="check" size={15} color="#1F57E5" />}
                       onPress={() => {
                         console.log(`Ver detalle de ${item.id}`);
                       }}
@@ -96,6 +93,7 @@ const Journey = ({navigation}) => {
         <View style={styles.buttonContainer}>
           <Button
             buttonStyle={styles.button}
+            titleStyle={styles.textButton}
             title="Finalizar viaje"
             onPress={() => {
               navigation.navigate('Journey');
@@ -114,12 +112,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: hp(2.5),
-    marginBottom: hp(1),
+    fontSize: hp(3),
+    marginBottom: hp(3),
     fontWeight: '700',
+    color: '#1F57E5',
   },
   subtitle: {
     fontWeight: '700',
+    fontSize: hp(2.5),
+    color: '#1F57E5',
   },
   body: {
     marginTop: -hp(17),
@@ -137,47 +138,66 @@ const styles = StyleSheet.create({
   },
   button: {
     width: wp(90),
+    backgroundColor: '#F7D64B',
+  },
+  textButton: {
+    color: '#1F57E5',
+    textTransform: 'uppercase',
+    fontSize: hp(2.5),
+    fontWeight: '700',
+  },
+  buttonItem: {
+    height: wp(10),
+    width: wp(10),
+    borderRadius: wp(20),
+    borderWidth: 3,
+    borderColor: '#A5B4DC',
+    backgroundColor: 'transparent',
   },
   newPackage: {
     flex: 0,
     flexDirection: 'row',
     marginTop: hp(1),
     width: wp(90),
-    height: hp(7),
-    borderRadius: 5,
-    borderWidth: 1,
+    height: hp(8),
+    borderRadius: 6,
     borderColor: '#c2c2c2',
     marginBottom: hp(2),
     backgroundColor: '#FFFFFF',
+    elevation: 2,
   },
   package: {
     flex: 1,
     flexDirection: 'row',
-    marginTop: hp(1),
+    marginVertical: hp(0.5),
     width: wp(90),
-    height: hp(7),
-    borderRadius: 5,
-    borderWidth: 1,
+    height: hp(8),
+    borderRadius: 6,
     borderColor: '#c2c2c2',
     backgroundColor: '#FFFFFF',
+    elevation: 2,
   },
   box: {
     backgroundColor: '#1F57E5',
     justifyContent: 'center',
     borderRadius: 5,
-    paddingHorizontal: wp(2),
+    paddingHorizontal: wp(3),
   },
   detail: {
     flex: 1,
-    paddingHorizontal: wp(2),
+    paddingHorizontal: wp(6),
     justifyContent: 'center',
   },
   detailName: {
     fontWeight: '700',
+    fontSize: hp(2.5),
+    color: '#1F57E5',
   },
   detailDatetime: {
     flexDirection: 'row',
   },
+  date: {fontSize: hp(2), color: '#1F57E5'},
+  time: {fontSize: hp(2), color: '#1F57E5'},
   status: {
     width: hp(7),
     justifyContent: 'center',
