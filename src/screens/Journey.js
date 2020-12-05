@@ -35,7 +35,8 @@ const Journey = ({navigation}) => {
       }); 
 
     }
-    
+    ///////////////// send info ////////////////
+
   return (
     <>
       <View style={styles.containter}>

@@ -29,7 +29,7 @@ const Login = ({navigation}) => {
     axiosRequest('login', 'post', datalogin)
       .then((resultAxios) => {
         // verifico la info
-
+        console.log(resultAxios);
         if (resultAxios.data) {
           access_token(resultAxios.data);
           // navigation.navigate('Journey');

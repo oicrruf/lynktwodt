@@ -12,7 +12,6 @@ import Login from '../screens/Login';
 import Journey from '../screens/Journey';
 import Delivery from '../screens/Delivery';
 import Detail from '../screens/Detail';
-
 const Logo = () => {
   return (
     <Image
@@ -37,7 +36,7 @@ const Navigation = () => {
           <Button
             icon={<Icon name="sign-out" size={20} color="#FFFFFF" />}
             onPress={() => {
-              console.log('cerrar sesion');
+              cleanLogin();
             }}
             color="#1F57E5"
             type="clear"
@@ -72,7 +71,7 @@ const Navigation = () => {
             <Button
               icon={<Icon name="sign-out" size={20} color="#1F57E5" />}
               onPress={() => {
-                console.log('cerrar sesion');
+                cleanLogin();
               }}
               color="#1F57E5"
               type="clear"
