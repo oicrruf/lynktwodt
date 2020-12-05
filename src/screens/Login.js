@@ -32,7 +32,7 @@ const Login = ({navigation}) => {
         // verifico la info
         if (resultAxios.data) {
           access_token(resultAxios.data);
-           navigation.navigate('Journey');
+          navigation.navigate('Journey');
         }
       })
       .catch(function (error) {
