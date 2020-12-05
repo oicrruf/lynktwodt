@@ -21,19 +21,40 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageT
 
   
   const RuteViajeSchema = new Realm({
-    path: 'RuteViajeDatabase.realm',
+    path: 'RuteViajesDatabase.realm',
     schema: [
       {
         name: 'RuteViaje',
         primaryKey: 'id',
         properties: {
             id : 'int',
+            code:"string",
             fecha:"string",
             hora:"string",
             nombre:"string",
             placa:"string",
             estado:"int",
             coordenadas:"string",
+        },
+      },
+    ],
+  });
+
+
+  const ParadaRuta = new Realm({
+    path: 'RutaParadaDatabase.realm',
+    schema: [
+      {
+        name: 'RuteViaje',
+        primaryKey: 'code',
+        properties: {
+            code : 'string',
+            fecha:"string",
+            hora:"string",
+            nombre:"string",
+            dui:"string",
+            coordenadas:"string",
+            state: "string"
         },
       },
     ],
@@ -116,16 +137,31 @@ export function reLogin(navigation){
   
 
   Users = new Realm({ path: 'UsersDatabase.realm' });
+  
+  Rv = new Realm({ path: 'RuteViajesDatabase.realm' });
   try {
     Users.write(() => {
 
       let DataUsers = Users.objects('Users');
+      let RuteViaje = Rv.objects('RuteViaje');
+      let namecomponent ="";
      
         if(DataUsers.length > 0){
-          navigation.reset({
-            index: 0,
-            routes: [{name: 'Journey'}],
+
+            Rv.write(() => {
+        
+             
+                if(RuteViaje.length > 0){
+                  namecomponent="Delivery";
+                }else{
+                  namecomponent="Journey";
+                }
+              
           });
+          
+          navigation.push(namecomponent);
+
+
         }else{
           
         }
@@ -167,7 +203,7 @@ export function checkSession(navigation){
 export function SaveRutaViaje(obj){
   
 
-  Rv = new Realm({ path: 'RuteViajeDatabase.realm' });
+  Rv = new Realm({ path: 'RuteViajesDatabase.realm' });
   try {
     Rv.write(() => {
       let DataUsers = Rv.objects('RuteViaje');
@@ -180,11 +216,16 @@ export function SaveRutaViaje(obj){
   }
 }
 
+export function SaveParadaViaje(obj){
+  
+
+}
+
 
 export function checkRute(navigation){
   
 
-  Rv = new Realm({ path: 'RuteViajeDatabase.realm' });
+  Rv = new Realm({ path: 'RuteViajesDatabase.realm' });
   try {
     Rv.write(() => {
 
@@ -211,7 +252,7 @@ export function checkRute(navigation){
 
 export function cleanRuteViaje() {
 
-  Rv = new Realm({ path: 'RuteViajeDatabase.realm' });
+  Rv = new Realm({ path: 'RuteViajesDatabase.realm' });
 
   try {
     Rv.write(() => {

@@ -25,11 +25,12 @@ const Journey = ({navigation}) => {
   const [plate, setPlate] = useState(false);
   const [plateSelection, setPlateSelection] = useState("");
 
+
   if (!plate) {
     axiosRequest('info', 'get', CompanyInfo)
       .then((resultInfoCompany) => {
         
-        let placas = resultInfoCompany.data;
+       let  placas = resultInfoCompany.data;
        
         /// seleccion placa actual de conductor.
         setPlateSelection(placas.placaPropia);
@@ -80,6 +81,7 @@ const Journey = ({navigation}) => {
               // formo objeto de envio 
               let dataToSend = {
                       id:1,
+                      code:text,
                       fecha:moment().format('YYYY/MM/DD'),
                       hora:moment().format('HH:mm'),
                       nombre:DataSave.user,
@@ -97,9 +99,13 @@ const Journey = ({navigation}) => {
                     axiosRequest('saveRute', 'post', CompanyInfo)
                     .then((result) => {
                       console.log(result.data);
+                      /// Guardo Ruta iniciadad
+                      SaveRutaViaje(dataToSend);
+
                     })
                     .catch(function (error) {
-                      ///error en envio entonces lo guardo.....
+
+                      ///Guardo ruta iniciada
                       SaveRutaViaje(dataToSend);
                     });
 

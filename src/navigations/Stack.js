@@ -59,6 +59,13 @@ const LoginStackNavigation = ({navigation}) => {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="Delivery"
+        component={JourneyStackNavigation}
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };
