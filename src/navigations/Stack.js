@@ -12,6 +12,7 @@ import Login from '../screens/Login';
 import Journey from '../screens/Journey';
 import Delivery from '../screens/Delivery';
 import Detail from '../screens/Detail';
+
 const Logo = () => {
   return (
     <Image
@@ -22,43 +23,54 @@ const Logo = () => {
 };
 const Stack = createStackNavigator();
 
-const Navigation = () => {
+const LoginStackNavigation = ({navigation}) => {
   return (
-    <Stack.Navigator
-      initialRouteName="Login"
-      screenOptions={{
-        headerShown: true,
-        headerStyle: {
-          elevation: 0,
-        },
-        headerTitle: (props) => <Logo {...props} />,
-        headerRight: () => (
-          <Button
-            icon={<Icon name="sign-out" size={20} color="#FFFFFF" />}
-            onPress={() => {
-              cleanLogin();
-            }}
-            color="#1F57E5"
-            type="clear"
-            buttonStyle={{
-              width: hp(6),
-              height: hp(6),
-              borderRadius: hp(12),
-            }}
-          />
-        ),
-      }}>
+    <Stack.Navigator initialRouteName="Login" screenOptions={{}}>
       <Stack.Screen
         name="Login"
         component={Login}
         options={{
           headerShown: false,
+          headerStyle: {
+            elevation: 0,
+          },
+          headerTitle: (props) => <Logo {...props} />,
+          headerRight: () => (
+            <Button
+              icon={<Icon name="sign-out" size={hp(3)} color="#FFFFFF" />}
+              onPress={() => {
+                cleanLogin(), navigation.navigate('Login');
+              }}
+              color="#1F57E5"
+              type="clear"
+              buttonStyle={{
+                width: hp(6),
+                height: hp(6),
+                borderRadius: hp(12),
+              }}
+            />
+          ),
         }}
       />
       <Stack.Screen
         name="Journey"
+        component={JourneyStackNavigation}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const JourneyStackNavigation = ({navigation}) => {
+  return (
+    <Stack.Navigator initialRouteName="Journey">
+      <Stack.Screen
+        name="Journey"
         component={Journey}
         options={{
+          headerShown: true,
           headerTransparent: false,
           headerTintColor: '#FFFFFF',
           headerStyle: {
@@ -69,9 +81,9 @@ const Navigation = () => {
           title: false,
           headerRight: () => (
             <Button
-              icon={<Icon name="sign-out" size={20} color="#1F57E5" />}
+              icon={<Icon name="sign-out" size={hp(3)} color="#1F57E5" />}
               onPress={() => {
-                cleanLogin();
+                cleanLogin(), navigation.navigate('Login');
               }}
               color="#1F57E5"
               type="clear"
@@ -86,7 +98,7 @@ const Navigation = () => {
       />
       <Stack.Screen
         name="Delivery"
-        component={Delivery}
+        component={DeliveryStackNavigation}
         options={{
           headerTransparent: false,
           headerTintColor: '#FFFFFF',
@@ -95,23 +107,59 @@ const Navigation = () => {
             backgroundColor: '#1F57E5',
           },
           title: false,
-        }}
-      />
-      <Stack.Screen
-        name="Detail"
-        component={Detail}
-        options={{
-          headerTransparent: false,
-          headerTintColor: '#FFFFFF',
-          headerStyle: {
-            height: hp(9),
-            backgroundColor: '#1F57E5',
-          },
-          title: false,
+          headerTitle: (props) => <Logo {...props} />,
+          headerRight: () => (
+            <Button
+              icon={<Icon name="sign-out" size={hp(3)} color="#FFFFFF" />}
+              onPress={() => {
+                cleanLogin(), navigation.navigate('Login');
+              }}
+              type="clear"
+              buttonStyle={{
+                width: hp(6),
+                height: hp(6),
+                borderRadius: hp(12),
+              }}
+            />
+          ),
         }}
       />
     </Stack.Navigator>
   );
 };
 
-export default Navigation;
+const DeliveryStackNavigation = () => {
+  return (
+    <Stack.Navigator initialRouteName="Delivery">
+      <Stack.Screen
+        name="Delivery"
+        component={Delivery}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Detail"
+        component={DetailStackNavigation}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const DetailStackNavigation = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Detail"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Detail" component={Detail} />
+      <Stack.Screen name="Delivery" component={Delivery} />
+    </Stack.Navigator>
+  );
+};
+
+export {LoginStackNavigation};
