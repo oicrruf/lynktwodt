@@ -16,7 +16,7 @@ import Detail from '../screens/Detail';
 const Logo = () => {
   return (
     <Image
-      style={{alignSelf: 'center'}}
+      style={{alignSelf: 'center',marginLeft:70}}
       source={require('../assets/images/header.png')}
     />
   );

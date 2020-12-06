@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: hp(3),
+    fontSize: hp(2.5),
     marginBottom: hp(3),
     fontFamily: 'Poppins-Bold',
     color: '#1F57E5',
@@ -214,8 +214,8 @@ const styles = StyleSheet.create({
   detailDatetime: {
     flexDirection: 'row',
   },
-  date: {fontSize: hp(2), color: '#1F57E5', fontFamily: 'Poppins-Regular'},
-  time: {fontSize: hp(2), color: '#1F57E5', fontFamily: 'Poppins-Regular'},
+  date: {fontSize: hp(1.5), color: '#1F57E5', fontFamily: 'Poppins-Regular'},
+  time: {fontSize: hp(1.5), color: '#1F57E5', fontFamily: 'Poppins-Regular'},
   status: {
     width: hp(7),
     justifyContent: 'center',

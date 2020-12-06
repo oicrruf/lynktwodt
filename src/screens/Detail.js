@@ -101,7 +101,7 @@ const Detail = ({navigation}) => {
                 placeholder="Nombre"
                 inputStyle={styles.textInputs}
                 inputContainerStyle={styles.containerInputs}
-                leftIcon={<Icon name="user" size={hp(2.5)} color="#1F57E5" />}
+                leftIcon={<Icon name="user" size={hp(2.5)} color="#1F57E5" style={{marginLeft:7}} />}
               />
               <Input
                 placeholder="DUI"
@@ -109,7 +109,7 @@ const Detail = ({navigation}) => {
                 inputStyle={styles.textInputs}
                 inputContainerStyle={styles.containerInputs}
                 leftIcon={
-                  <Icon name="id-card" size={hp(2.5)} color="#1F57E5" />
+                  <Icon name="id-card" size={hp(2.5)} color="#1F57E5" style={{marginLeft:2}} />
                 }
               />
             </View>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: hp(3),
+    fontSize: hp(2.5),
     marginBottom: hp(3),
     fontFamily: 'Poppins-Bold',
     color: '#1F57E5',
@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
   textInputs: {
     color: '#939090',
     fontSize: hp(2),
+    marginTop:6,
     fontFamily: 'Poppins-Regular',
   },
   containerInputs: {borderBottomColor: '#939090'},

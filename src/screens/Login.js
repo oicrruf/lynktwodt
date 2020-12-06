@@ -72,7 +72,7 @@ const Login = ({navigation}) => {
             placeholder="Contraseña"
             inputStyle={styles.textInputs}
             inputContainerStyle={styles.containerInputs}
-            leftIcon={<Icon name="lock" size={hp(2.5)} color="#F7D64B" />}
+            leftIcon={<Icon name="lock" size={hp(2.5)} color="#F7D64B" style={{marginLeft:3}}/>}
             onChangeText={(event) => getValue(event)}
             secureTextEntry={true}
           />
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
   },
   textInputs: {
     color: '#FFF',
+    marginTop:6,
     fontSize: hp(2),
     fontFamily: 'Poppins-Regular',
   },

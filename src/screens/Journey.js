@@ -97,8 +97,10 @@ const Journey = ({navigation}) => {
                     /// todo listo para enviar.
                     axiosRequest('saveRute', 'post', dataToSend)
                     .then((result) => {
+                      
                       /// Guardo Ruta iniciadad
                        SaveRutaViaje(dataToSend);
+
                        navigation.reset({
                         index: 0,
                         routes: [{ name: "Delivery" }],
@@ -142,8 +144,9 @@ const Journey = ({navigation}) => {
             </ImageBackground>
           </View>
           <View style={styles.inputs}>
-            <Text style={styles.title}>¡Bienvenido</Text>
+            <Text style={styles.titleWel}>¡Bienvenido</Text>
             <Text style={styles.title}>{DataSave.user}!</Text>
+            <View style={{borderBottomWidth:1, borderColor:'#FFFFFF',  borderStyle:  'dashed'}}>
             <Picker
               selectedValue={plateSelection.license_plate}
               style={styles.picker}
@@ -154,6 +157,8 @@ const Journey = ({navigation}) => {
               <Picker.Item label="Seleccionar Placa" value="" />
               {plate}
             </Picker>
+            </View>
+            
           </View>
           <ImageBackground
             source={require('../assets/images/bg-footer.png')}
@@ -214,6 +219,13 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Poppins-Bold',
     fontSize: hp(3),
+    color: '#FFFFFF',
+  },
+  titleWel: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: hp(3),
+    position:"relative",
+    marginBottom:-8,
     color: '#FFFFFF',
   },
   picker: {
