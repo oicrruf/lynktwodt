@@ -21,7 +21,7 @@ const Login = ({navigation}) => {
   useEffect(() => {
     const interval = setInterval(() => {
       CurrentPosition();
-    }, 5000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
