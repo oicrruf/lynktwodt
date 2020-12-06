@@ -176,10 +176,7 @@ export function reLogin(navigation){
               
           });
           
-          navigation.reset({
-            index: 0,
-            routes: [{ name: namecomponent }],
-          });
+          
 
 
         }else{

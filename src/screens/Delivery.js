@@ -66,9 +66,8 @@ const Journey = ({navigation}) => {
                   onPress={() => {
                     navigation.reset({
                       index: 0,
-                      routes: [{ name: "" }],
+                      routes: [{ name: "Detail" }],
                     });
-                    navigation.navi('Detail');
                   }}
                 />
               </View>

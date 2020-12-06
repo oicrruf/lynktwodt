@@ -25,7 +25,7 @@ const Stack = createStackNavigator();
 
 const LoginStackNavigation = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouteName="Journey" screenOptions={{}}>
+    <Stack.Navigator initialRouteName="Login" screenOptions={{}}>
       <Stack.Screen
         name="Login"
         component={Login}
