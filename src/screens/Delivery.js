@@ -12,6 +12,9 @@ import {CurrentPosition} from "../function/CurrentPosition";
 
 const Journey = ({navigation}) => {
   const [delivery, setDelivery] = useState(readDataParadaRute());
+  /// manejo de botones.
+  const [ChangeText, setChangeText] = useState("Guardar");
+  const [disableBottom, setdisableBottom] = useState(null);
 
   //// Get Posicion
   useEffect(() => {
@@ -25,6 +28,8 @@ const Journey = ({navigation}) => {
   
 
   const SincronizarAllRoutes = () => {
+    setdisableBottom(true);
+    setChangeText("SINCRONIZANDO...");
     /// Creo todo el paquete
     let ultraDataRoutes = {
       ruteFather: readDataRute()[0],
@@ -125,7 +130,8 @@ const Journey = ({navigation}) => {
           <Button
             buttonStyle={styles.button}
             titleStyle={styles.textButton}
-            title="Finalizar viaje"
+            title={ChangeText}
+            disabled={disableBottom}
             onPress={() => {
               SincronizarAllRoutes();
             }}
