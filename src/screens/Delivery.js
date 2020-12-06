@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {Button, CheckBox} from 'react-native-elements';
 import {StyleSheet, View, Text, FlatList, Image} from 'react-native';
 import {
@@ -8,8 +8,21 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {checkSession, readData,SaveRutaViaje,checkRute,cleanRuteViaje,readDataParadaRute,readDataRute,cleanRuteParadasViaje} from '../function/Realmio';
 import {axiosRequest} from '../function/Request';
+import {CurrentPosition} from "../function/CurrentPosition";
+
 const Journey = ({navigation}) => {
   const [delivery, setDelivery] = useState(readDataParadaRute());
+
+  //// Get Posicion
+  useEffect(() => {
+    const interval = setInterval(() => {
+      CurrentPosition();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+ //// end Get Posicion
+  
+  
 
   const SincronizarAllRoutes = () => {
     /// Creo todo el paquete

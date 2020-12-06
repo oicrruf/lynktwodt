@@ -7,16 +7,25 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {axiosRequest} from '../function/Request';
-import {checkSession, readData,SaveRutaViaje,checkRute,cleanRuteViaje} from '../function/Realmio';
+import {checkSession, readData,SaveRutaViaje,checkRute,cleanRuteViaje,readGeo} from '../function/Realmio';
 import moment from "moment";
 import {requestLocationPermission} from "../function/requesPermisos";
 import Geolocation from '@react-native-community/geolocation';
+import {CurrentPosition} from "../function/CurrentPosition";
+
 
 const Journey = ({navigation}) => {
   /// Verifico la session del usuario
   useEffect(() => {
     checkSession(navigation);
     checkRute(navigation);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      CurrentPosition();
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   // info AXIOS
@@ -64,19 +73,6 @@ const Journey = ({navigation}) => {
 
       if((plateSelection.license_plate != "") && (plateSelection != "")){
         try {
-            const granted = await PermissionsAndroid.request(
-             
-              PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-              {
-                'title': 'Lynktwo',
-                'message': 'Para poder utilizar Lynktwo Dominacion territorial es necesario aceptar el permiso de geolocalizacion.'
-              },
-            );
-            
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-
-              /// permisos aceptados  
-
               // formo objeto de envio 
               let dataToSend = {
                       id:1,
@@ -89,11 +85,8 @@ const Journey = ({navigation}) => {
                       geolocalizacion:"",
                     }
 
-                // traigo mi geo localizacion
-                Geolocation.getCurrentPosition(
-                  position => {
-                    const initialPosition = position;
-                    dataToSend.geolocalizacion = initialPosition.coords.latitude + "/" +initialPosition.coords.longitude;
+                    // traigo mi geo localizacion
+                    dataToSend.geolocalizacion = readGeo()[0].geo;
                     /// todo listo para enviar.
                     axiosRequest('saveRute', 'post', dataToSend)
                     .then((result) => {
@@ -113,12 +106,8 @@ const Journey = ({navigation}) => {
                         });
                     });
 
-                  }
-                );
-            } else {
-              alert("Sin permisos");
-            }
-    
+                  
+              
           } catch (err) {
             console.warn(err)
           }

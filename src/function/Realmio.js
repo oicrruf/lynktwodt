@@ -59,6 +59,20 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp, heightPercentageT
     ],
   });
 
+  const lastGeo = new Realm({
+    path: 'lastgeodatabase.realm',
+    schema: [
+      {
+        name: 'lastgeo',
+        primaryKey: 'id',
+        properties: {
+             id : 'int',
+            geo: "string"
+        },
+      },
+    ],
+  });
+
 
 
   /// save access_token
@@ -142,7 +156,7 @@ export function cleanLogin(navigation) {
     
       
   });
-  
+  cleanGeo();
   }catch (error) {
     console.log(error);
   }
@@ -236,6 +250,22 @@ export function SaveRutaViaje(obj){
   }
 }
 
+
+export function SaveGeo(obj){
+
+  Rv = new Realm({ path: 'lastgeodatabase.realm' });
+  try {
+    Rv.write(() => {
+      let DataUsers = Rv.objects('lastgeo');
+      Rv.delete(DataUsers);
+      let UserData = Rv.create('lastgeo', obj);
+  });
+  
+  }catch (error) {
+    console.log(error);
+  }
+}
+
 export function SaveParadaViaje(obj){
   
   Rv = new Realm({ path: 'RutaParadaDatabase.realm' });
@@ -293,6 +323,7 @@ export function cleanRuteViaje() {
   }catch (error) {
     console.log('Error en realmio.js');
   }
+  cleanGeo();
 }
 
 export function cleanRuteParadasViaje() {
@@ -311,6 +342,22 @@ export function cleanRuteParadasViaje() {
   }
 }
 
+export function cleanGeo() {
+
+  Rv = new Realm({ path: 'lastgeodatabase.realm' });
+
+  try {
+    Rv.write(() => {
+      // Create a book object
+      let DataUsers = Rv.objects('lastgeo');
+      Rv.delete(DataUsers);
+  });
+
+  }catch (error) {
+    console.log('Error en realmio.js');
+  }
+}
+
 export function readDataRute() {
 
  
@@ -319,6 +366,25 @@ export function readDataRute() {
   try {
     Users.write(() => {
       let DataUsers = Users.objects('RuteViaje');
+      data = DataUsers;
+
+  });
+  
+  }catch (error) {
+    console.log(error);
+  }
+
+  return data;
+}
+
+export function readGeo() {
+
+ 
+  Users = new Realm({ path: 'lastgeodatabase.realm' });
+  let data = "";
+  try {
+    Users.write(() => {
+      let DataUsers = Users.objects('lastgeo');
       data = DataUsers;
 
   });
