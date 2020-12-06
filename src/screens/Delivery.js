@@ -74,8 +74,9 @@ const Journey = ({navigation}) => {
             </View>
             <FlatList
               data={delivery}
+              keyExtractor={item => item.duiBeneficiario}
               renderItem={({item}) => (
-                <View style={styles.package} key={item.duiBeneficiario}>
+                <View style={styles.package}>
                   <View style={styles.box}>
                     <Image
                       source={require('../assets/images/box-delivery.png')}
