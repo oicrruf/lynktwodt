@@ -61,7 +61,6 @@ const Journey = ({navigation}) => {
         for (var i = 0; i < 10; i++){
           text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
-  console.log(text);
 
       if((plateSelection.license_plate != "") && (plateSelection != "")){
         try {
@@ -100,12 +99,18 @@ const Journey = ({navigation}) => {
                     .then((result) => {
                       /// Guardo Ruta iniciadad
                        SaveRutaViaje(dataToSend);
-                       navigation.push("Delivery");
+                       navigation.reset({
+                        index: 0,
+                        routes: [{ name: "Delivery" }],
+                      });
                     })
                     .catch(function (error) {
                       ///Guardo ruta iniciada
                          SaveRutaViaje(dataToSend);
-                         navigation.push("Delivery");
+                         navigation.reset({
+                          index: 0,
+                          routes: [{ name: "Delivery" }],
+                        });
                     });
 
                   }
@@ -239,7 +244,7 @@ const styles = StyleSheet.create({
   textButton: {
     color: '#1F57E5',
     textTransform: 'uppercase',
-    fontSize: hp(2.5),
+    fontSize: hp(2),
     fontFamily: 'Poppins-Bold',
   },
 });

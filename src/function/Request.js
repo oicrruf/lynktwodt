@@ -9,6 +9,7 @@ export function axiosRequest(endpoint,method,data) {
           info : "https://www.lynktwo.com/api/auth/driverInfo/",
           saveRute : "http://dev.lynktwo.com/api/route",
           beneficiario: 'http://dev.lynktwo.com/api/beneficiers',
+          finparada: 'http://dev.lynktwo.com/api/stops',
         };
 
         let header = {};

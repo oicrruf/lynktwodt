@@ -116,20 +116,38 @@ export function readData() {
 
 
 
-export function cleanLogin() {
+export function cleanLogin(navigation) {
 
   Users = new Realm({ path: 'UsersDatabase.realm' });
+  Rv = new Realm({ path: 'RuteViajesDatabase.realm' });
 
   try {
-    Users.write(() => {
-      // Create a book object
-      let DataUsers = Users.objects('Users');
-      Users.delete(DataUsers);
-  });
+    Rv.write(() => {
 
+      let rute = Rv.objects('RuteViaje');
+     
+        if(rute.length > 0){
+          alert("Debe Finalizar ruta antes de cerrar su sesion de usuario.");
+        }else{
+          Users.write(() => {
+            // Create a book object
+            let DataUsers = Users.objects('Users');
+            Users.delete(DataUsers);
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Login' }],
+            });
+        });
+        }
+    
+      
+  });
+  
   }catch (error) {
-    console.log('Error en realmio.js');
+    console.log(error);
   }
+
+  
 }
 
 export function reLogin(navigation){
@@ -158,7 +176,10 @@ export function reLogin(navigation){
               
           });
           
-          navigation.push(namecomponent);
+          navigation.reset({
+            index: 0,
+            routes: [{ name: namecomponent }],
+          });
 
 
         }else{
@@ -274,6 +295,21 @@ export function cleanRuteViaje() {
   }
 }
 
+export function cleanRuteParadasViaje() {
+
+  Rv = new Realm({ path: 'RutaParadaDatabase.realm' });
+
+  try {
+    Rv.write(() => {
+      // Create a book object
+      let DataUsers = Rv.objects('RuteViaje');
+      Rv.delete(DataUsers);
+  });
+
+  }catch (error) {
+    console.log('Error en realmio.js');
+  }
+}
 
 export function readDataRute() {
 

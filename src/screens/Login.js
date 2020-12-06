@@ -15,7 +15,7 @@ const Login = ({navigation}) => {
 
   useEffect(() => {
     reLogin(navigation);
-  }, []);
+  });
 
   const getValue = (value, type = false) => {
     type ? setformUser(value) : setformPass(value);
@@ -34,7 +34,11 @@ const Login = ({navigation}) => {
 
         }else{
             access_token(resultAxios.data);
-           navigation.navigate('Journey');
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Journey" }],
+            });
+          
         }
 
       })
@@ -134,7 +138,7 @@ const styles = StyleSheet.create({
   },
   textInputs: {
     color: '#FFF',
-    fontSize: hp(2.5),
+    fontSize: hp(2),
     fontFamily: 'Poppins-Regular',
   },
   containerInputs: {borderBottomColor: '#FFFFFF'},
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
   textButton: {
     color: '#1F57E5',
     textTransform: 'uppercase',
-    fontSize: hp(2.5),
+    fontSize: hp(2),
     fontFamily: 'Poppins-Bold',
   },
   buttonContainer: {

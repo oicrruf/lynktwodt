@@ -25,7 +25,7 @@ const Stack = createStackNavigator();
 
 const LoginStackNavigation = ({navigation}) => {
   return (
-    <Stack.Navigator initialRouteName="Login" screenOptions={{}}>
+    <Stack.Navigator initialRouteName="Journey" screenOptions={{}}>
       <Stack.Screen
         name="Login"
         component={Login}
@@ -39,7 +39,7 @@ const LoginStackNavigation = ({navigation}) => {
             <Button
               icon={<Icon name="sign-out" size={hp(3)} color="#FFFFFF" />}
               onPress={() => {
-                cleanLogin(), navigation.push('Login');
+                 cleanLogin(navigation);
               }}
               color="#1F57E5"
               type="clear"
@@ -77,6 +77,7 @@ const JourneyStackNavigation = ({navigation}) => {
         name="Journey"
         component={Journey}
         options={{
+          headerLetf: false,
           headerShown: true,
           headerTransparent: false,
           headerTintColor: '#FFFFFF',
@@ -90,7 +91,7 @@ const JourneyStackNavigation = ({navigation}) => {
             <Button
               icon={<Icon name="sign-out" size={hp(3)} color="#1F57E5" />}
               onPress={() => {
-                cleanLogin(), navigation.push('Login');
+                cleanLogin(navigation);
               }}
               color="#1F57E5"
               type="clear"
@@ -119,7 +120,7 @@ const JourneyStackNavigation = ({navigation}) => {
             <Button
               icon={<Icon name="sign-out" size={hp(3)} color="#FFFFFF" />}
               onPress={() => {
-                cleanLogin(), navigation.push('Login');
+                 cleanLogin(navigation);
               }}
               type="clear"
               buttonStyle={{

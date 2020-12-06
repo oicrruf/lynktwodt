@@ -6,12 +6,42 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {checkSession, readData,SaveRutaViaje,checkRute,cleanRuteViaje,readDataParadaRute} from '../function/Realmio';
-
+import {checkSession, readData,SaveRutaViaje,checkRute,cleanRuteViaje,readDataParadaRute,readDataRute,cleanRuteParadasViaje} from '../function/Realmio';
+import {axiosRequest} from '../function/Request';
 const Journey = ({navigation}) => {
   const [delivery, setDelivery] = useState(readDataParadaRute());
 
-  console.log(delivery);
+  const SincronizarAllRoutes = () => {
+    /// Creo todo el paquete
+    let ultraDataRoutes = {
+      ruteFather: readDataRute()[0],
+      ruteStops: JSON.parse(JSON.stringify(delivery))
+    }
+
+    /// Genero la peticion.
+    axiosRequest('finparada', 'post', ultraDataRoutes)
+                    .then((result) => {
+                      /// Guardo Ruta iniciadad
+
+                        if(result.data.message){
+                          cleanRuteViaje();
+                          cleanRuteParadasViaje();
+                          navigation.reset({
+                            index: 0,
+                            routes: [{ name: "Journey" }],
+                          });
+                        }
+                    
+                    })
+                    .catch(function (error) {
+                      ///Guardo ruta iniciada
+                      console.log(ultraDataRoutes);
+                      console.log(error);
+                        alert("Error en sincronizacion: Es requerida una conexión a internet para poder finalizar tu viaje.");
+                    });
+
+
+  }
   return (
     <>
       <View style={styles.containter}>
@@ -34,7 +64,11 @@ const Journey = ({navigation}) => {
                   icon={<Icon name="plus" size={15} color="#1F57E5" />}
                   buttonStyle={styles.buttonItem}
                   onPress={() => {
-                    navigation.push('Detail');
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: "" }],
+                    });
+                    navigation.navi('Detail');
                   }}
                 />
               </View>
@@ -80,7 +114,7 @@ const Journey = ({navigation}) => {
             titleStyle={styles.textButton}
             title="Finalizar viaje"
             onPress={() => {
-              navigation.navigate('Journey');
+              SincronizarAllRoutes();
             }}
           />
         </View>
@@ -103,7 +137,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontFamily: 'Poppins-Bold',
-    fontSize: hp(2.5),
+    fontSize: hp(2),
     color: '#1F57E5',
   },
   body: {
@@ -127,7 +161,7 @@ const styles = StyleSheet.create({
   textButton: {
     color: '#1F57E5',
     textTransform: 'uppercase',
-    fontSize: hp(2.5),
+    fontSize: hp(2),
     fontFamily: 'Poppins-Bold',
   },
   buttonItem: {
@@ -174,7 +208,7 @@ const styles = StyleSheet.create({
   },
   detailName: {
     fontFamily: 'Poppins-Bold',
-    fontSize: hp(2.5),
+    fontSize: hp(2),
     color: '#1F57E5',
   },
   detailDatetime: {

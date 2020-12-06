@@ -55,18 +55,23 @@ const Detail = ({navigation}) => {
             position => {
               const initialPosition = position;
               datauser.checkpoint = initialPosition.coords.latitude + "/" +initialPosition.coords.longitude;
-              console.log(datauser);
+              
                 /// envio la notificaciones 
                 axiosRequest('beneficiario', 'post',datauser )
                 .then((resultAxios) => {
-                  console.log(resultAxios.data);
                   SaveParadaViaje(datauser);
-                  navigation.push("Delivery");
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: "Delivery" }],
+                  });
                 })
                 .catch(function (error) {
                   console.log(error);
                   SaveParadaViaje(datauser);
-                  navigation.push("Delivery");
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: "Delivery" }],
+                  });
                 });
             }
           );
@@ -177,12 +182,12 @@ const styles = StyleSheet.create({
   textButton: {
     color: '#1F57E5',
     textTransform: 'uppercase',
-    fontSize: hp(2.5),
+    fontSize: hp(2),
     fontFamily: 'Poppins-Bold',
   },
   textInputs: {
-    color: '#FFF',
-    fontSize: hp(2.5),
+    color: '#939090',
+    fontSize: hp(2),
     fontFamily: 'Poppins-Regular',
   },
   containerInputs: {borderBottomColor: '#939090'},
