@@ -7,7 +7,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {axiosRequest} from '../function/Request';
-import {access_token, reLogin} from '../function/Realmio';
+import {access_token, reLogin,readGeo,SaveGeo} from '../function/Realmio';
+import {CurrentPosition} from "../function/CurrentPosition";
 
 const Login = ({navigation}) => {
   const [GetUser, setformUser] = useState(false);
@@ -16,6 +17,15 @@ const Login = ({navigation}) => {
   useEffect(() => {
     reLogin(navigation);
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      CurrentPosition();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+
 
   const getValue = (value, type = false) => {
     type ? setformUser(value) : setformPass(value);
@@ -64,6 +74,8 @@ const Login = ({navigation}) => {
           <Input
             placeholder="Usuario"
             inputStyle={styles.textInputs}
+            keyboardType='email-address'
+            autoCapitalize = 'none'
             inputContainerStyle={styles.containerInputs}
             leftIcon={<Icon name="user" size={hp(2.5)} color="#F7D64B" />}
             onChangeText={(event) => getValue(event, 'user')}

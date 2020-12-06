@@ -6,14 +6,22 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {checkSession, readData,SaveRutaViaje,SaveParadaViaje,checkRute,cleanRuteViaje,readDataRute,} from '../function/Realmio';
+import {checkSession, readData,SaveRutaViaje,SaveParadaViaje,checkRute,cleanRuteViaje,readDataRute,readGeo} from '../function/Realmio';
 import moment from "moment";
 import {axiosRequest} from '../function/Request';
 import Geolocation from '@react-native-community/geolocation';
+import {CurrentPosition} from "../function/CurrentPosition";
 
 const Detail = ({navigation}) => {
   useEffect(() => {
     checkSession(navigation);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      CurrentPosition();
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   
@@ -28,16 +36,7 @@ const Detail = ({navigation}) => {
 
   async function SaveParada() {
     try {
-      const granted = await PermissionsAndroid.request(
-       
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          'title': 'Lynktwo',
-          'message': 'Para poder utilizar Lynktwo Dominacion territorial es necesario aceptar el permiso de geolocalizacion.'
-        },
-      );
-      
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+     
 
         const dataRute = readDataRute()[0];
 
@@ -51,10 +50,7 @@ const Detail = ({navigation}) => {
            state: 1
           };
 
-          Geolocation.getCurrentPosition(
-            position => {
-              const initialPosition = position;
-              datauser.checkpoint = initialPosition.coords.latitude + "/" +initialPosition.coords.longitude;
+               datauser.checkpoint = readGeo()[0].geo;
               
                 /// envio la notificaciones 
                 axiosRequest('beneficiario', 'post',datauser )
@@ -73,11 +69,7 @@ const Detail = ({navigation}) => {
                     routes: [{ name: "Delivery" }],
                   });
                 });
-            }
-          );
-      } else {
-        alert("Sin permisos");
-      }
+        
 
     } catch (err) {
       console.warn(err)
@@ -105,6 +97,8 @@ const Detail = ({navigation}) => {
               />
               <Input
                 placeholder="DUI"
+                keyboardType='numeric'
+                maxLength={9}
                 onChangeText={(event) => getValue(event)}
                 inputStyle={styles.textInputs}
                 inputContainerStyle={styles.containerInputs}
