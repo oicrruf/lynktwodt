@@ -28,6 +28,9 @@ const Detail = ({navigation}) => {
   const [GetName, setformName] = useState(false);
   const [GetDui, setformDui] = useState(false);
 
+  /// manejo de botones.
+  const [ChangeText, setChangeText] = useState("Guardar");
+  const [disableBottom, setdisableBottom] = useState(null);
 
   const getValue = (value, type = false) => {
     type ? setformName(value) : setformDui(value);
@@ -37,6 +40,8 @@ const Detail = ({navigation}) => {
   async function SaveParada() {
     try {
      
+      setdisableBottom(true);
+      setChangeText("ENVIANDO...");
 
         const dataRute = readDataRute()[0];
 
@@ -60,6 +65,7 @@ const Detail = ({navigation}) => {
                     index: 0,
                     routes: [{ name: "Delivery" }],
                   });
+                  
                 })
                 .catch(function (error) {
                   console.log(error);
@@ -69,7 +75,8 @@ const Detail = ({navigation}) => {
                     routes: [{ name: "Delivery" }],
                   });
                 });
-        
+
+                
 
     } catch (err) {
       console.warn(err)
@@ -112,7 +119,8 @@ const Detail = ({navigation}) => {
             <Button
               buttonStyle={styles.button}
               titleStyle={styles.textButton}
-              title="Guardar"
+              title={ChangeText}
+              disabled={disableBottom}
               onPress={() => {
                 SaveParada();
               }}
