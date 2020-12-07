@@ -61,7 +61,5 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
-android/app/release/app-release.aab
-android/app/release/app-release.apk
-android/app/release/output.json
+android/app/release/**
 private_key.pepk
