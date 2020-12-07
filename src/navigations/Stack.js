@@ -16,7 +16,7 @@ import Detail from '../screens/Detail';
 const Logo = () => {
   return (
     <Image
-      style={{alignSelf: 'center',marginLeft:70}}
+      style={{alignSelf: 'center'}}
       source={require('../assets/images/header.png')}
     />
   );
@@ -77,7 +77,7 @@ const JourneyStackNavigation = ({navigation}) => {
         name="Journey"
         component={Journey}
         options={{
-          headerLetf: false,
+          headerLetf: () => <View></View>,
           headerShown: true,
           headerTransparent: false,
           headerTintColor: '#FFFFFF',

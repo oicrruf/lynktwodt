@@ -13,7 +13,7 @@ import {CurrentPosition} from "../function/CurrentPosition";
 const Journey = ({navigation}) => {
   const [delivery, setDelivery] = useState(readDataParadaRute());
   /// manejo de botones.
-  const [ChangeText, setChangeText] = useState("Guardar");
+  const [ChangeText, setChangeText] = useState("Enviar");
   const [disableBottom, setdisableBottom] = useState(null);
 
   //// Get Posicion

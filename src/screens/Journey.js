@@ -33,6 +33,9 @@ const Journey = ({navigation}) => {
   const CompanyInfo = {id: DataSave.id, access_token: DataSave.token};
   const [plate, setPlate] = useState(false);
   const [plateSelection, setPlateSelection] = useState("");
+  /// manejo de botones.
+  const [ChangeText, setChangeText] = useState("Iniciar viaje");
+  const [disableBottom, setdisableBottom] = useState(null);
 
 
   if (!plate) {
@@ -63,7 +66,8 @@ const Journey = ({navigation}) => {
     ///////////////// send info ////////////////
 
     async function  IniciandoRuta(){
-    
+      setdisableBottom(true);
+      setChangeText("INICIANDO...");
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" + plateSelection.license_plate;
       
@@ -155,7 +159,8 @@ const Journey = ({navigation}) => {
             <Button
               buttonStyle={styles.button}
               titleStyle={styles.textButton}
-              title="Iniciar viaje"
+              title={ChangeText}
+              disabled={disableBottom}
               onPress={() => {
                 IniciandoRuta()
               }}
