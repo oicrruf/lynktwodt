@@ -50,7 +50,7 @@ const Detail = ({navigation}) => {
         alert('Todos los datos son requeridos');
       } else {
         if (GetDui.length < 9) {
-          alert('Verifique DUI ingresad');
+          alert('Verifique el número de DUI ingresado');
           return null;
         }
 
