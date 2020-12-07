@@ -257,8 +257,7 @@ export function SaveGeo(obj){
   try {
     Rv.write(() => {
       let DataUsers = Rv.objects('lastgeo');
-      Rv.delete(DataUsers);
-      let UserData = Rv.create('lastgeo', obj);
+      let UserData = Rv.create('lastgeo', obj, 'modified');
   });
   
   }catch (error) {

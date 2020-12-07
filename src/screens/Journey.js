@@ -118,6 +118,8 @@ const Journey = ({navigation}) => {
               
           } catch (err) {
             console.warn(err)
+            setdisableBottom(null);
+            setChangeText("INICIAR VIAJE");
           }
         }else{
           alert("Debe seleccionar una placa para iniciar ruta.");
