@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Button, CheckBox} from 'react-native-elements';
-import {StyleSheet, View, Text, FlatList, Image} from 'react-native';
+import {StyleSheet, View, Text, FlatList, Image, Alert} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -143,7 +143,16 @@ const Journey = ({navigation}) => {
             title={ChangeText}
             disabled={disableBottom}
             onPress={() => {
-              SincronizarAllRoutes();
+              Alert.alert(
+                'Finalizar ruta',
+                '¿Está seguro de finalizar la ruta?',
+                [
+                  {
+                    text: 'Cancelar',
+                  },
+                  {text: 'OK', onPress: () => SincronizarAllRoutes()},
+                ],
+              );
             }}
           />
         </View>
