@@ -49,6 +49,11 @@ const Detail = ({navigation}) => {
       if (GetName == '' || GetDui == '') {
         alert('Todos los datos son requeridos');
       } else {
+        if (GetDui.length < 9) {
+          alert('Verifique DUI ingresad');
+          return null;
+        }
+
         setdisableBottom(true);
         setChangeText('ENVIANDO...');
 

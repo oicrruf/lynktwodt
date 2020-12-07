@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button, CheckBox} from 'react-native-elements';
 import {StyleSheet, View, Text, FlatList, Image} from 'react-native';
 import {
@@ -6,14 +6,23 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {checkSession, readData,SaveRutaViaje,checkRute,cleanRuteViaje,readDataParadaRute,readDataRute,cleanRuteParadasViaje} from '../function/Realmio';
+import {
+  checkSession,
+  readData,
+  SaveRutaViaje,
+  checkRute,
+  cleanRuteViaje,
+  readDataParadaRute,
+  readDataRute,
+  cleanRuteParadasViaje,
+} from '../function/Realmio';
 import {axiosRequest} from '../function/Request';
-import {CurrentPosition} from "../function/CurrentPosition";
+import {CurrentPosition} from '../function/CurrentPosition';
 
 const Journey = ({navigation}) => {
   const [delivery, setDelivery] = useState(readDataParadaRute());
   /// manejo de botones.
-  const [ChangeText, setChangeText] = useState("Enviar");
+  const [ChangeText, setChangeText] = useState('Finalizar ruta');
   const [disableBottom, setdisableBottom] = useState(null);
 
   //// Get Posicion
@@ -23,43 +32,42 @@ const Journey = ({navigation}) => {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
- //// end Get Posicion
-  
-  
+  //// end Get Posicion
 
   const SincronizarAllRoutes = () => {
     setdisableBottom(true);
-    setChangeText("SINCRONIZANDO...");
+    setChangeText('SINCRONIZANDO...');
     /// Creo todo el paquete
     let ultraDataRoutes = {
       ruteFather: readDataRute()[0],
-      ruteStops: JSON.parse(JSON.stringify(delivery))
-    }
+      ruteStops: JSON.parse(JSON.stringify(delivery)),
+    };
 
     /// Genero la peticion.
     axiosRequest('finparada', 'post', ultraDataRoutes)
-                    .then((result) => {
-                      /// Guardo Ruta iniciadad
+      .then((result) => {
+        /// Guardo Ruta iniciadad
 
-                        if(result.data.message){
-                          cleanRuteViaje();
-                          cleanRuteParadasViaje();
-                          navigation.reset({
-                            index: 0,
-                            routes: [{ name: "Journey" }],
-                          });
-                        }
-                    
-                    })
-                    .catch(function (error) {
-                      ///Guardo ruta iniciada
-                      console.log(ultraDataRoutes);
-                      console.log(error);
-                        alert("Error en sincronizacion: Es requerida una conexión a internet para poder finalizar tu viaje.");
-                    });
-
-
-  }
+        if (result.data.message) {
+          cleanRuteViaje();
+          cleanRuteParadasViaje();
+          navigation.reset({
+            index: 0,
+            routes: [{name: 'Journey'}],
+          });
+        }
+      })
+      .catch(function (error) {
+        ///Guardo ruta iniciada
+        console.log(ultraDataRoutes);
+        console.log(error);
+        alert(
+          'Error en sincronizacion: Es requerida una conexión a internet para poder finalizar tu viaje.',
+        );
+        setdisableBottom(null);
+        setChangeText('Finalizar ruta');
+      });
+  };
   return (
     <>
       <View style={styles.containter}>
@@ -84,7 +92,7 @@ const Journey = ({navigation}) => {
                   onPress={() => {
                     navigation.reset({
                       index: 0,
-                      routes: [{ name: "Detail" }],
+                      routes: [{name: 'Detail'}],
                     });
                   }}
                 />
@@ -92,7 +100,7 @@ const Journey = ({navigation}) => {
             </View>
             <FlatList
               data={delivery}
-              keyExtractor={item => item.duiBeneficiario}
+              keyExtractor={(item) => item.duiBeneficiario}
               renderItem={({item}) => (
                 <View style={styles.package}>
                   <View style={styles.box}>
@@ -103,7 +111,9 @@ const Journey = ({navigation}) => {
                     />
                   </View>
                   <View style={styles.detail}>
-                    <Text style={styles.detailName}>{item.nombreBeneficiario}</Text>
+                    <Text style={styles.detailName}>
+                      {item.nombreBeneficiario}
+                    </Text>
                     <View style={styles.detailDatetime}>
                       <Text style={styles.date}>{item.fecha}, </Text>
                       <Text style={styles.time}>{item.hora}</Text>
