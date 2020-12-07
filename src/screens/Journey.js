@@ -34,14 +34,16 @@ const Journey = ({navigation}) => {
   const [plate, setPlate] = useState(false);
   const [plateSelection, setPlateSelection] = useState("");
   /// manejo de botones.
-  const [ChangeText, setChangeText] = useState("Iniciar viaje");
-  const [disableBottom, setdisableBottom] = useState(null);
+  const [ChangeText, setChangeText] = useState("BUSCANDO PLACA");
+  const [disableBottom, setdisableBottom] = useState(true);
 
 
   if (!plate) {
+    
     axiosRequest('info', 'get', CompanyInfo)
       .then((resultInfoCompany) => {
-        
+        setdisableBottom(null);
+      setChangeText("INICIAR VIAJE");
        let  placas = resultInfoCompany.data;
        
         /// seleccion placa actual de conductor.
