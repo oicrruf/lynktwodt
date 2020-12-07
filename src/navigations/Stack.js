@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Button} from 'react-native-elements';
-import {Image} from 'react-native';
+import {Image, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
@@ -39,7 +39,7 @@ const LoginStackNavigation = ({navigation}) => {
             <Button
               icon={<Icon name="sign-out" size={hp(3)} color="#FFFFFF" />}
               onPress={() => {
-                 cleanLogin(navigation);
+                cleanLogin(navigation);
               }}
               color="#1F57E5"
               type="clear"
@@ -77,7 +77,6 @@ const JourneyStackNavigation = ({navigation}) => {
         name="Journey"
         component={Journey}
         options={{
-          headerLetf: () => <View></View>,
           headerShown: true,
           headerTransparent: false,
           headerTintColor: '#FFFFFF',
@@ -108,6 +107,7 @@ const JourneyStackNavigation = ({navigation}) => {
         name="Delivery"
         component={DeliveryStackNavigation}
         options={{
+          headerLeft: () => <View></View>,
           headerTransparent: false,
           headerTintColor: '#FFFFFF',
           headerStyle: {
@@ -120,7 +120,7 @@ const JourneyStackNavigation = ({navigation}) => {
             <Button
               icon={<Icon name="sign-out" size={hp(3)} color="#FFFFFF" />}
               onPress={() => {
-                 cleanLogin(navigation);
+                cleanLogin(navigation);
               }}
               type="clear"
               buttonStyle={{
